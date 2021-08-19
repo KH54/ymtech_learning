@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 
-class First_0723 {
+class FirstMission {
 
     final static String DB_URL = "jdbc:mysql://127.0.0.1:3306/ymtechfirst";
     final static String DB_ID = "root";
