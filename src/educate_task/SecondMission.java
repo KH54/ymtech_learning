@@ -5,6 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author "KyungHun Park"
+ * @since 2021. 8. 20.
+ *
+ */
 public class SecondMission {
 
     public static void main(String[] args) {

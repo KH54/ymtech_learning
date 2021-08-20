@@ -137,6 +137,7 @@ class FirstMission {
         Scanner sc = new Scanner(System.in);
         int control = 0;                // 작업을 수행하기 위해 사용자에게 입력 받은 수를 저장하는 변수
 
+        // 어떤 작업을 할것인지 선택
         while (control != 5) {
             System.out.println("DB에서 수행할 작업을 고르세요");
             System.out.println("1 : insert, 2 : delete, 3 : update, 4 : read, 5 : quit");
