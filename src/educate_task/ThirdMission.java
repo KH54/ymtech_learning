@@ -1,5 +1,33 @@
 package educate_task;
 
-public class ThirdMission {
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+public class ThirdMission {
+    public static void main(String[] args) {
+        List<String> arrayList = new ArrayList<>();
+        String[] array = new String[10];
+        
+        System.out.println(Arrays.toString(ListToArray(arrayList,array)));
+        System.out.println(ArrayToList(arrayList, array));
+        
+        
+    }
+    
+    // List를 Array로 변경
+    public static String[] ListToArray(List<String> arrayList, String[] array) {
+        array = arrayList.toArray(new String[0]);
+        
+        return array; 
+    }
+    
+    // Array를 List로 변경
+    public static List<String> ArrayToList(List<String> arrayList, String[] array) {
+        arrayList = Arrays.asList(array);
+        
+        
+        return arrayList;
+    }
 }
