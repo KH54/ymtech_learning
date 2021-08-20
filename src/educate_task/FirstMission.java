@@ -123,7 +123,8 @@ class FirstMission {
             
             System.out.println("");
             // TABLE의 저장된 값을 출력
-            while (rs.next()) {
+            while (rs
+                    .next()) {
                 System.out.println(String.format("ID: %s, PW: %s", rs.getString("id"), rs.getString("password")));
             }
             System.out.println("");
