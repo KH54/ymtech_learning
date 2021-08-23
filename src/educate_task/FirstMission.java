@@ -4,145 +4,249 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+import org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException;
+
+/**
+ * 
+ * @author user
+ * @since 2021. 8. 23.
+ * 
+ *        DB의 'info' TABLE에 접근하여 사용자에게 입력 받은 값으로 CRUD 수행
+ */
 class FirstMission {
 
-    final static String DB_URL = "jdbc:mysql://127.0.0.1:3306/ymtechfirst";
-    final static String DB_ID = "root";
-    final static String DB_PW = "eownddlf1704!";
+    // log
+    private static Logger logger = Logger.getLogger(FirstMission.class);
+
+    // DB 연결을 위한 주소, ID, PW, Driver 위치
+    protected final static String DB_URL = "jdbc:mysql://127.0.0.1:3306/ymtechfirst";
+    protected final static String DB_ID = "root";
+    protected final static String DB_PW = "eownddlf1704!";
+    protected final static String DB_DRIVER = "org.mariadb.jdbc.Driver";
+
+    // 사용자 입력을 받기 위한 Scanner, 입력값을 저장하기 위한 ID, PW
+    protected static String id;
+    protected static String password;
+    protected static Scanner inputInfo = new Scanner(System.in);
+    
 
     /**
      * 
-     * @author user
-     * @since 2021. 8. 19.
-     * 
-     *        ymtechfirst DB의 table에 접근하여 사용자에게 입력 받은 값으로 CRUD 수행
+     * @author "KyungHun Park"
+     * @since 2021. 8. 23.
+     *
+     *        TABLE에 ID와 PW를 저장
      */
     public static void insert() {
-
-        Scanner sc_insert = new Scanner(System.in);
-        String id, password; // 입력 받을 id, password
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(DB_DRIVER);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
         }
 
         // DB 연결 정보
-        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("INSERT INTO info(id, password) VALUES(?,?)");)
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("INSERT INTO info(id, password) VALUES(?,?)");) {
 
-        {
             // 사용자에게 추가할 ID와 PW 입력 받음
-            System.out.println("추가할 ID 입력 : ");
-            id = sc_insert.next();
-            System.out.println("추가할 PASSWORD 입력 : ");
-            password = sc_insert.next();
+            System.out.print("추가할 ID 입력 : ");
+            id = inputInfo.next();
+            System.out.print("추가할 PASSWORD 입력 : ");
+            password = inputInfo.next();
 
+            // index를 String 값으로 지정
             stmt.setString(1, id);
             stmt.setString(2, password);
 
+            // 변경된 stmt를 DB table에 저장
             stmt.executeUpdate();
-            System.out.println(id + "가 추가되었습니다.");
+            System.out.println("ID :"+id + "가 추가되었습니다.");
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 다시 작업 선택으로 이동
+            System.out.println(" DB와 연결되어있지 않습니다.");
+            logger.error(ce.getMessage());
+
+        } catch (SQLException e) { // 중복된 ID 값을 입력한 경우 다시 작업 선택으로 이동
+            System.out.println(" ID가 중복되었습니다! 다시 입력해주세요");
+            logger.error(e.getMessage());
+        } finally {
+            inputInfo.nextLine();
         }
     }
 
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 23.
+     *
+     *        TABLE에 저장된 ID값과 일치하는 ID, PASSWORD 삭제
+     */
     public static void delete() {
-        Scanner sc_delete = new Scanner(System.in);
-        String id = null; // 입력 받을 id
+
+        System.out.print("삭제할 ID 입력 : ");
+        id = inputInfo.next();
 
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(DB_DRIVER);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         // DB 연결 정보
-        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("DELETE FROM info WHERE id = ?");) {
-            System.out.println("삭제할 ID 입력 : ");
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("DELETE FROM info WHERE id = ?"); ResultSet rs = stmt.executeQuery("SELECT * FROM info WHERE id ='" + id + "'");) {
 
-            // 사용자에게 ID 입력 받아 일치하는 ID, PW 삭제
-            id = sc_delete.next();
-            stmt.setString(1, id);
+            // 사용자에게 입력 받은 ID와 일치하는 ID, PW 삭제
+            if (rs.next()) {
+                /* 연결된 DB의 테이블에 레코드가 있는 경우 실행 */
 
-            stmt.executeUpdate();
-            System.out.println(id + "가 삭제되었습니다.");
+                // index를 String 값으로 지정
+                stmt.setString(1, id);
 
+                // 변경된 stmt를 DB table에 저장
+                stmt.executeUpdate();
+                System.out.println("삭제완료");
+            } else {
+                System.out.println("삭제할 ID가 없습니다."); /* 연결된 DB의 테이블에 레코드가 없는 경우 */
+            }
+
+        } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 다시 작업 선택으로 이동
+            System.out.println(" DB와 연결되어있지 않습니다.");
+            logger.error(ce);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("삭제할 ID " + id + "가 없습니다.");
+            logger.error(e);
+        }finally {
+            inputInfo.nextLine();
         }
     }
 
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 23.
+     *
+     *        TABLE에 저장된 ID의 PW를 변경
+     */
     public static void update() {
-        Scanner sc_update = new Scanner(System.in);
-        String id, password; // 입력 받을 id, password
 
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(DB_DRIVER);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+            logger.error(e);        }
         // DB 연결 정보
-        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("UPDATE info SET password = ? WHERE id = ?");) {
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("UPDATE info SET password = ? WHERE id = ?");) {
 
             // 사용자에게 업데이트 할 ID를 입력받아 PW를 변경
-            System.out.println("업데이트할 ID 입력 : ");
-            id = sc_update.next();
-            System.out.println("ID의 새로운 PASSWORD 입력 : ");
-            password = sc_update.next();
+            System.out.print("업데이트할 ID 입력 : ");
+            id = inputInfo.next();
+            System.out.print("ID의 새로운 PASSWORD 입력 : ");
+            password = inputInfo.next();
 
+            // index를 String 값으로 지정
             stmt.setString(1, password);
             stmt.setString(2, id);
 
+            // 변경된 stmt를 DB table에 저장
             stmt.executeUpdate();
-            if (stmt.executeUpdate() != 0) { // 일치하는 id가 있는지 check
+
+            if (stmt.executeUpdate() != 0) {
+                /* Update된 레코드의 수가 0이면 일치하는 ID가 없어 Update되지 않은 것 한 개이상 Update 됐으면 실행 */
                 System.out.println("업데이트 완료되었습니다.");
             } else {
                 System.out.println("업데이트에 실패하였습니다. ID를 확인하세요");
             }
+
+        } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 다시 작업 선택으로 이동
+            System.out.println(" DB와 연결되어있지 않습니다.");
+            logger.error(ce);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
+        } finally {
+            inputInfo.nextLine();
         }
     }
 
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 23.
+     * 
+     *        TABLE에 저장된 레코드를 Console에 출력
+     */
     public static void read() {
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName(DB_DRIVER);
         } catch (Exception e) {
             e.printStackTrace();
         }
         // DB 연결 정보
-        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("SELECT * FROM  info"); ResultSet rs = stmt.executeQuery();) {
-            
-            System.out.println("");
-            // TABLE의 저장된 값을 출력
-            while (rs
-                    .next()) {
-                System.out.println(String.format("ID: %s, PW: %s", rs.getString("id"), rs.getString("password")));
-            }
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("SELECT * FROM  info"); ResultSet rs = stmt.executeQuery();) {
+
             System.out.println("");
 
+            if (rs.next()) {
+                /* table에 레코드가 저장되어있으면 실행 */
+
+                // rs가 위에서 한번 next() 되었기 때문에 제일 처음으로 돌려준다.
+                rs.beforeFirst();
+
+                // TABLE에 저장된 id와 pw를 출력
+                while (rs.next()) {
+
+                    System.out.println(String.format("ID: %s, PW: %s", rs.getString("id"), rs.getString("password")));
+                }
+            } else {
+                System.out.println("TABLE이 비어있습니다.");
+            }
+
+            System.out.println("");
+
+        } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 다시 작업 선택으로 이동
+            System.out.println(" DB와 연결되어있지 않습니다.");
+            logger.error(ce);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 23.
+     *
+     * @param args
+     * 
+     *             TABLE에서 수행할 작업을 선택
+     */
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int control = 0;                // 작업을 수행하기 위해 사용자에게 입력 받은 수를 저장하는 변수
 
-        // 어떤 작업을 할것인지 선택
-        while (control != 5) {
-            System.out.println("DB에서 수행할 작업을 고르세요");
-            System.out.println("1 : insert, 2 : delete, 3 : update, 4 : read, 5 : quit");
-            control = sc.nextInt();
+        int control = 0; // 작업을 수행하기 위해 사용자에게 입력 받은 수를 저장하는 변수
+
+        // 종료값이 들어올때 까지 계속 수정이 가능하도록 While문 사용
+        while (true) {
+
+            try {
+                System.out.println("TABLE에서 수행할 작업을 고르세요");
+                System.out.println("1 : insert, 2 : delete, 3 : update, 4 : read, 5 : quit");
+                control = inputInfo.nextInt();
+
+                if (control > 5) { // 선택지에 없는 수(6 이상)이 입력되었을 때 재입력 요청
+                    System.out.println("선택지에 있는 숫자만 입력해주세요");
+                    continue;
+                } else if (control == 5) {
+                    System.out.println("시스템을 종료합니다.");
+                    break;
+                }
+            } catch (InputMismatchException ie) { // int형 타입이 아닌 값이 입력되었을 때 예외처리
+                System.out.println("숫자를 입력해주세요");
+                inputInfo.nextLine(); // enter를 기준으로 값을 받아오는 nextline() 메소드. 입력된 값을 초기화 시켜준다.
+                logger.error(ie);
+            } catch (Exception e) {
+                logger.error(e);
+            }
             switch (control) {
             case 1:
                 insert();
@@ -157,6 +261,9 @@ class FirstMission {
                 read();
                 break;
             }
+            inputInfo.nextLine();
         }
+        
     }
+
 }
