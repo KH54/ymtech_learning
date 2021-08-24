@@ -89,9 +89,9 @@ public class SecondMission {
 
         // ArrayList 방법과 HashSet 방법 중 선택
         while (true) {
+            System.out.println("중복 제거할 방법을 선택하세요");
+            System.out.println("1. ArrayList 2. HashSet 3. quit");
             try {
-                System.out.println("중복 제거할 방법을 선택하세요");
-                System.out.println("1. ArrayList 2. HashSet 3. quit");
                 control = scControl.nextInt();
             } catch (InputMismatchException ie) { // int형 타입이 아닌 값이 입력되었을 때
                 scControl.nextLine(); // 입력받은 값을 초기화
