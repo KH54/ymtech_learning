@@ -21,15 +21,15 @@ public class ThirdMission {
         System.out.println(Arrays.toString(array) + "\n");
 
         // 바뀐 값
-        System.out.println(arrayToList(array, list));
-        System.out.println(Arrays.toString(listToArray(list, array)) + "\n");
+        System.out.println(changeArr(array, list));
+        System.out.println(Arrays.toString(changeList(list, array)) + "\n");
         
         System.out.println(list);
         System.out.println(Arrays.toString(array) + "\n");
 
 
-        list = arrayToList(array, list);
-        array = listToArray(list, array);
+        list = changeArr(array, list);
+        array = changeList(list, array);
     }
     
     /**
@@ -44,7 +44,7 @@ public class ThirdMission {
      * 
      *         array를 list로 변경
      */
-    public static List<String> arrayToList(String[] array, List<String> list) {
+    public static List<String> changeArr(String[] array, List<String> list) {
         list = Arrays.asList(array); // Array API를 이용한 변환
 
         /*
@@ -65,7 +65,7 @@ public class ThirdMission {
      * 
      *         list를 array로 변경
      */
-    public static String[] listToArray(List<String> list, String[] array) {
+    public static String[] changeList(List<String> list, String[] array) {
         array = list.toArray(new String[list.size()]); // List API를 이용한 변환
 
         /*

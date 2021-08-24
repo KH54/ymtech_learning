@@ -43,7 +43,7 @@ public class SecondMission {
      * 
      *             ArrayList를 이용한 중복제거
      */
-    public static void arrList(List<String> list) { //메소드명은 동사형으로 시작
+    public static void useArrList(List<String> list) {
         List<String> arrayList = new ArrayList<>();
 
         for (String data : list) {
@@ -64,7 +64,7 @@ public class SecondMission {
      * 
      *             Set을 이용한 중복 제거
      */
-    public static void hashSet(List<String> list) { //메소드명은 동사형으로 시작
+    public static void useHashSet(List<String> list) {
         HashSet<String> hashSet = new HashSet<>();
 
         for (String data : list) {
@@ -73,7 +73,14 @@ public class SecondMission {
         System.out.println("HashSet result : " + hashSet + "\n");
     }
 
-    public static void main(String[] args) {
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 24.
+     *
+     *        중복제거 할 방법을 선택
+     */
+    public static void main() {
         List<String> list = new ArrayList<>(); // 입력 받을 list
         Scanner scControl = new Scanner(System.in); //
         int control = 0;
@@ -86,31 +93,27 @@ public class SecondMission {
                 System.out.println("중복 제거할 방법을 선택하세요");
                 System.out.println("1. ArrayList 2. HashSet 3. quit");
                 control = scControl.nextInt();
-
-                if (control > 3) {
-                    System.out.println("선택지에 있는 숫자만 입력하세요");
-                    continue;
-                } else if (control == 3) {
-                    System.out.println("시스템을 종료합니다.");
-                    break;
-                } //
-
             } catch (InputMismatchException ie) { // int형 타입이 아닌 값이 입력되었을 때
-                System.out.println("숫자를 입력해주세요");
                 scControl.nextLine(); // 입력받은 값을 초기화
-                logger.info(ie);
-
+                logger.info(ie + "\n숫자만 입력하세요");
+                continue;
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                logger.error(e + "\nSystem exit");
+                System.exit(0);
             }
 
             switch (control) {
             case 1:
-                arrList(list);
+                useArrList(list);
                 break;
             case 2:
-                hashSet(list);
+                useHashSet(list);
                 break;
+            case 3:
+                System.out.println("System exit");
+                System.exit(0);
+            default:
+                System.out.println("선택지에 있는 숫자만 입력하세요");
             }
         }
 

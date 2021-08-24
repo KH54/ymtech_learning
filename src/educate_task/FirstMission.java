@@ -10,6 +10,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
 
+import com.sun.jdi.Method;
+
 /**
  * 
  * @author user
@@ -32,6 +34,7 @@ class FirstMission {
     private static String id;
     private static String password;
     private static Scanner inputInfo = new Scanner(System.in);
+    
 
     /**
      * 
@@ -41,12 +44,9 @@ class FirstMission {
      *        TABLE에 ID와 PW를 저장
      */
     public static void insert() {
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            logger.error(e+"\n System exit");
-            System.exit(0);
-        }
+
+        // Driver 로드
+        loadDriver();
 
         // DB 연결 정보
         try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("INSERT INTO info(id, password) VALUES(?,?)");) {
@@ -64,13 +64,13 @@ class FirstMission {
             // 변경된 stmt를 DB table에 저장
             stmt.executeUpdate();
             System.out.println("ID :" + id + "가 추가되었습니다.");
-
+            
         } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 시스템 종료
-            logger.error(ce.getMessage()+ "\n System exit");
+            logger.error(ce.getMessage() + "\n System exit");
             System.exit(0);
         } catch (SQLException e) { // 중복된 ID 값을 입력한 경우 다시 작업 선택으로 이동
-            System.out.println(" ID가 중복되었습니다! 다시 입력해주세요");
-            logger.info(e.getMessage());
+            logger.info(e.getMessage() +"\n 아이디가 중복되었습니다. 다시 입력해주세요");
+            insert();
         } finally {
             inputInfo.nextLine();
         }
@@ -84,15 +84,13 @@ class FirstMission {
      *        TABLE에 저장된 ID값과 일치하는 ID, PASSWORD 삭제
      */
     public static void delete() {
+        
+        // Driver 로드
+        loadDriver();
 
         System.out.print("삭제할 ID 입력 : ");
         id = inputInfo.next();
 
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (Exception e) {
-            logger.error(e);
-        }
         // DB 연결 정보
         try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("DELETE FROM info WHERE id = ?"); ResultSet rs = stmt.executeQuery("SELECT * FROM info WHERE id ='" + id + "'");) {
 
@@ -105,16 +103,17 @@ class FirstMission {
 
                 // 변경된 stmt를 DB table에 저장
                 stmt.executeUpdate();
-                System.out.println("삭제완료");
+                System.out.println("삭제 완료");
             } else {
-                System.out.println("삭제할 ID가 없습니다."); /* 연결된 DB의 테이블에 레코드가 없는 경우 */
+                System.out.println("삭제할 ID가 없습니다. 선택 화면으로 돌아갑니다."); /* 연결된 DB의 테이블에 레코드가 없는 경우 */
+
             }
 
-        } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 시스템 종료            
-            logger.error(ce+"\n System exit");
+        } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 시스템 종료
+            logger.error(ce + "\n System exit");
             System.exit(0);
         } catch (Exception e) {
-            logger.error(e+"\n System exit");
+            logger.error(e + "\n System exit");
             System.exit(0);
         } finally {
             inputInfo.nextLine();
@@ -130,11 +129,9 @@ class FirstMission {
      */
     public static void update() {
 
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (Exception e) {
-            logger.info(e);
-        }
+        // Driver 로드
+        loadDriver();
+
         // DB 연결 정보
         try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("UPDATE info SET password = ? WHERE id = ?");) {
 
@@ -153,14 +150,14 @@ class FirstMission {
                 /* Update된 레코드의 수가 0이면 일치하는 ID가 없어 Update되지 않은 것 한 개이상 Update 됐으면 실행 */
                 System.out.println("업데이트 완료되었습니다.");
             } else {
-                System.out.println("업데이트에 실패하였습니다. ID를 확인하세요");
+                System.out.println("일치하는 ID가 없습니다. 선택 화면으로 돌아갑니다.");
             }
 
         } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 다시 작업 선택으로 이동
-            logger.error(ce+"\n System exit");
+            logger.error(ce + "\n System exit");
             System.exit(0);
         } catch (Exception e) {
-            logger.error(e+"\n System exit");
+            logger.error(e + "\n System exit");
             System.exit(0);
         } finally {
             inputInfo.nextLine();
@@ -175,11 +172,9 @@ class FirstMission {
      *        TABLE에 저장된 레코드를 Console에 출력
      */
     public static void read() {
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (Exception e) {
-            logger.error(e);
-        }
+
+        // Driver 로드
+        loadDriver();
         // DB 연결 정보
         try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("SELECT * FROM  info"); ResultSet rs = stmt.executeQuery();) {
 
@@ -203,14 +198,29 @@ class FirstMission {
             System.out.println("");
 
         } catch (SQLNonTransientConnectionException ce) { // DB와 연결이 되지 않을 경우 시스템 종료
-            logger.error(ce+"\n System exit");
+            logger.error(ce + "\n System exit");
             System.exit(0);
         } catch (Exception e) {
-            logger.error(e+"\n System exit");
+            logger.error(e + "\n System exit");
             System.exit(0);
         }
     }
 
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 24.
+     *
+     *        Driver load method
+     */
+    static void loadDriver() {
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (Exception e) {
+            logger.error(e);
+        }
+    }
+    
     /**
      * 
      * @author "KyungHun Park"
@@ -229,22 +239,16 @@ class FirstMission {
 
             try {
                 System.out.println("TABLE에서 수행할 작업을 고르세요");
+
                 System.out.println("1 : insert, 2 : delete, 3 : update, 4 : read, 5 : quit");
                 control = inputInfo.nextInt();
-
-                if (control > 5) { // 선택지에 없는 수(6 이상)이 입력되었을 때 재입력 요청
-                    System.out.println("선택지에 있는 숫자만 입력해주세요");
-                    continue;
-                } else if (control == 5) {
-                    System.out.println("시스템을 종료합니다.");
-                    break;
-                } // switch문과 합병
+                
             } catch (InputMismatchException ie) { // int형 타입이 아닌 값이 입력되었을 때 예외처리
-                System.out.println("숫자를 입력해주세요");
-                inputInfo.nextLine(); // enter를 기준으로 값을 받아오는 nextLine() 메소드. 입력된 값을 초기화 시켜준다.
-                logger.info(ie);
+                inputInfo.nextLine(); // enter를 기준으로 값을받아오는 nextLine() 메소드. 입력된 값을 초기화 시켜준다.
+                logger.info(ie+"\n숫자를 입력해주세요");
+                continue;
             } catch (Exception e) {
-                logger.error(e+"\n System exit");
+                logger.error(e + "\n System exit");
                 System.exit(0);
             }
 
@@ -253,14 +257,25 @@ class FirstMission {
             case 1:
                 insert();
                 break;
+
             case 2:
                 delete();
                 break;
+
             case 3:
                 update();
                 break;
+
             case 4:
                 read();
+                break;
+
+            case 5:
+                System.out.println("시스템 종료");
+                System.exit(0);
+
+            default:
+                System.out.println("선택지에 있는 숫자만 입력해주세요");
                 break;
             }
             inputInfo.nextLine();
