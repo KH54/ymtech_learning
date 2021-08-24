@@ -19,27 +19,65 @@ import org.apache.log4j.Logger;
 public class SecondMission {
     private static Logger logger = Logger.getLogger(SecondMission.class);
 
-   /**
-    * 
-    * @author "KyungHun Park"
-    * @since 2021. 8. 23.
-    *
-    * @return 입력된 값을 반환 
-    * 
-    * list에 중복 값을 입력
-    */
-    public static List<String> addList(){
-        List<String> list = Arrays.asList("a","o","e","i","o","u","a","e"); // 입력 받을 list
-        
-        
-        return list; 
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 23.
+     *
+     * @return 입력된 값을 반환
+     * 
+     *         list에 중복 값을 입력
+     */
+    public static List<String> addList() {
+        List<String> list = Arrays.asList("a", "o", "e", "i", "o", "u", "a", "e"); // 입력 받을 list
+
+        return list;
     }
-    
+
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 23.
+     *
+     * @param list
+     * 
+     *             ArrayList를 이용한 중복제거
+     */
+    public static void arrList(List<String> list) { //메소드명은 동사형으로 시작
+        List<String> arrayList = new ArrayList<>();
+
+        for (String data : list) {
+            if (!arrayList.contains(data)) { // ArrayList에 포함되어 있지 않으면 data 추가
+                arrayList.add(data);
+            }
+        }
+
+        System.out.println("ArrayList result : " + arrayList + "\n");
+    }
+
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 8. 23.
+     *
+     * @param list
+     * 
+     *             Set을 이용한 중복 제거
+     */
+    public static void hashSet(List<String> list) { //메소드명은 동사형으로 시작
+        HashSet<String> hashSet = new HashSet<>();
+
+        for (String data : list) {
+            hashSet.add(data); // Set은 중복값이 없기 때문에 바로 입력
+        }
+        System.out.println("HashSet result : " + hashSet + "\n");
+    }
+
     public static void main(String[] args) {
         List<String> list = new ArrayList<>(); // 입력 받을 list
         Scanner scControl = new Scanner(System.in); //
         int control = 0;
-        
+
         list = addList(); // 중복된 값 입력
 
         // ArrayList 방법과 HashSet 방법 중 선택
@@ -55,7 +93,7 @@ public class SecondMission {
                 } else if (control == 3) {
                     System.out.println("시스템을 종료합니다.");
                     break;
-                }
+                } //
 
             } catch (InputMismatchException ie) { // int형 타입이 아닌 값이 입력되었을 때
                 System.out.println("숫자를 입력해주세요");
@@ -76,43 +114,5 @@ public class SecondMission {
             }
         }
 
-    }
-
-    /**
-     * 
-     * @author "KyungHun Park"
-     * @since 2021. 8. 23.
-     *
-     * @param list
-     * 
-     *             ArrayList를 이용한 중복제거
-     */
-    public static void arrList(List<String> list) {
-        List<String> arrayList = new ArrayList<>();
-
-        for (String data : list) {
-            if (!arrayList.contains(data)) // ArrayList에 포함되어 있지 않으면 data 추가
-                arrayList.add(data);
-        }
-
-        System.out.println("ArrayList result : " + arrayList + "\n");
-    }
-
-    /**
-     * 
-     * @author "KyungHun Park"
-     * @since 2021. 8. 23.
-     *
-     * @param list
-     * 
-     *             Set을 이용한 중복 제거
-     */
-    public static void hashSet(List<String> list) {
-        HashSet<String> hashSet = new HashSet<>();
-
-        for (String data : list) {
-            hashSet.add(data); // Set은 중복값이 없기 때문에 바로 입력
-        }
-        System.out.println("HashSet result : " + hashSet + "\n");
     }
 }

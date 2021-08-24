@@ -23,11 +23,15 @@ public class ThirdMission {
         // ¹Ù²ï °ª
         System.out.println(arrayToList(array, list));
         System.out.println(Arrays.toString(listToArray(list, array)) + "\n");
+        
+        System.out.println(list);
+        System.out.println(Arrays.toString(array) + "\n");
+
 
         list = arrayToList(array, list);
         array = listToArray(list, array);
     }
-
+    
     /**
      * 
      * @author "KyungHun Park"
