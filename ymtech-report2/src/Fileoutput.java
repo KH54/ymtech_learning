@@ -17,7 +17,7 @@ public class Fileoutput {
      */
     public static void main(String[] args) {
         try {
-            File File = new File("C:\\Users\\user\\Desktop\\개인자료\\영수증");
+            File File = new File("C:\\Users\\user\\Desktop\\일학습병행제");
 
             File[] files = File.listFiles();
 
