@@ -1,4 +1,4 @@
-package Deduplication;
+package com.ymtech.deduplication;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,18 +31,17 @@ public class Deduplicate {
         Logger logger = Logger.getLogger(Deduplicate.class);
 
         // 중복이 존재하는 list 생성
-        List<String> list = Arrays.asList("a", "e", "i", "i", "o", "u", "a", "e"); 
+        List<String> list = Arrays.asList("a", "e", "i", "i", "o", "u", "a", "e");
 
         // 중복 제거 방법을 입력받기 위한 Scanner 클래스
         Scanner controlDup = new Scanner(System.in);
 
         int control = 0; // 입력받은 controlDup을 저장하기 위한 변수
 
-
         // ArrayList 방법과 HashSet 방법 중 선택
         while (true) {
             System.out.println("중복 제거할 방법을 선택하세요");
-            System.out.println("1. ArrayList 2. HashSet 3. quit");
+            System.out.println("1. ArrayList 2. HashSet 3. Stream 4. quit");
 
             try {
                 control = controlDup.nextInt(); // 사용자에게 입력받은 값을 저장
@@ -60,21 +59,25 @@ public class Deduplicate {
 
             // switch case를 이용하여 입력받은 값에 따라 해당하는 메소드 호출
             switch (control) {
-            
+
             case 1: // ArrayList를 사용한 방법
                 useArrList(list);
                 break;
-                
+
             case 2: // HashSet을 사용한 방법
                 useHashSet(list);
                 break;
-                
-            case 3: // 시스템 종료
+
+            case 3: // Stream을 사용한 방법
+                useStream(list);
+                break;
+
+            case 4: // 시스템 종료
                 System.out.println("System exit");
                 controlDup.close(); // scanner 종료
                 System.exit(0);
-                
-            default: // 1~3의 숫자가 아닌 다른 숫자를 입력한 경우
+
+            default: // 1~4의 숫자가 아닌 다른 숫자를 입력한 경우
                 System.out.println("선택지에 있는 숫자만 입력하세요");
             }
         }
@@ -125,5 +128,19 @@ public class Deduplicate {
 
         // 중복을 제거한 뒤 Set 출력
         System.out.printf("HashSet result : %s \n", hashSet);
+    }
+
+    /**
+     * 
+     * @author "KyungHun Park"
+     * @since 2021. 9. 3.
+     *
+     * @param list
+     * 
+     *             Stream을 이용한 중복 제거
+     */
+    public static void useStream(List<String> list) {
+        // Stream의 distinct를 사용한 중복제거
+        list.stream().distinct().forEach(System.out::print);
     }
 }

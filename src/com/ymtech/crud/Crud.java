@@ -1,4 +1,4 @@
-package Crud;
+package com.ymtech.crud;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package Crud;
+package com.ymtech.crud;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

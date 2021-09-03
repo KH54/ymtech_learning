@@ -1,4 +1,4 @@
-package educate_task;
+package com.ymtech.cast;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +24,7 @@ public class Casting {
         // ¹Ù²ï °ª
         System.out.println(changeArr(array, list));
         System.out.printf("%s \n\n",Arrays.toString(changeList(list, array)));
+        
         
     }
     
