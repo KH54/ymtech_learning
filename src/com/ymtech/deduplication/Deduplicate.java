@@ -39,7 +39,7 @@ public class Deduplicate {
         int control = 0; // 입력받은 controlDup을 저장하기 위한 변수
 
         // ArrayList 방법과 HashSet 방법 중 선택
-        while (true) {
+        while (control != 4) {
             System.out.println("중복 제거할 방법을 선택하세요");
             System.out.println("1. ArrayList 2. HashSet 3. Stream 4. quit");
 

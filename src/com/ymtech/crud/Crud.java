@@ -27,7 +27,7 @@ public class Crud {
         int control = 0;
 
         // break까지 계속 수정이 가능하도록 While문 사용
-        while (true) {
+        while (control != 5) {
 
             try {
                 // 수행할 CRUD 선택
