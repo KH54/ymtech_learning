@@ -5,21 +5,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
+ *        디렉토리의 모든 하위 디렉토리와 파일을 출력하는 클래스
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 3.
  *
- *        디렉토리의 모든 하위 디렉토리와 파일을 출력하는 클래스
  */
 public class Fileoutput {
     /**
+     *             디렉토리 경로 설정과 디렉토리 내부 목록을 저장하는 files 생성
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
      * @param args
      * 
-     *             디렉토리 경로 설정과 디렉토리 내부 목록을 저장하는 files 생성
      */
     public static void main(String[] args) {
 
@@ -62,13 +62,13 @@ public class Fileoutput {
     }
 
     /**
+     *              현재와 하위 디렉토리들이 가진 목록을 출력하는 메소드
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
      * @param files // File 배열로 반환한 디렉토리 및 파일 목록 files
      * 
-     *              현재와 하위 디렉토리들이 가진 목록을 출력하는 메소드
      */
     static void findLowDirectory(File[] files) {
         StringBuffer fileName = new StringBuffer(); // 목록의 요소를 저장하기 위한 String 변수
