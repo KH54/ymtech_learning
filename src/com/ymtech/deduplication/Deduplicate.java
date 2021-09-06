@@ -10,20 +10,20 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 /**
+ *        ArrayList와 HashSet으로 list의 중복을 제거하는 class
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 3.
  * 
- *        ArrayList와 HashSet으로 list의 중복을 제거하는 class
  */
 public class Deduplicate {
 
     /**
+     *        중복제거 할 방법을 하는 main 메소드
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
-     *        중복제거 할 방법을 하는 main 메소드
      */
     public static void main(String[] args) {
 
@@ -85,13 +85,13 @@ public class Deduplicate {
     }
 
     /**
+     *             ArrayList를 이용한 중복제거
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
      * @param list
      * 
-     *             ArrayList를 이용한 중복제거
      */
     public static void useArrList(List<String> list) {
         // 중복을 제거한 list를 담을 list 생성
@@ -109,13 +109,13 @@ public class Deduplicate {
     }
 
     /**
+     *             Set을 이용한 중복 제거
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
      * @param list
      * 
-     *             Set을 이용한 중복 제거
      */
     public static void useHashSet(List<String> list) {
         // 중복을 제거한 Set을 담을 Set 생성
@@ -131,13 +131,13 @@ public class Deduplicate {
     }
 
     /**
+     *             Stream을 이용한 중복 제거
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
      * @param list
      * 
-     *             Stream을 이용한 중복 제거
      */
     public static void useStream(List<String> list) {
         // Stream의 distinct를 사용한 중복제거

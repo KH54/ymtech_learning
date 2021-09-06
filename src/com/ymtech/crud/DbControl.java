@@ -10,11 +10,11 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 /**
+ *        테이블에 직접적으로 CRUD하는 Class
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 3.
  *
- *        테이블에 직접적으로 CRUD하는 Class
  */
 public class DbControl {
 
@@ -33,11 +33,11 @@ public class DbControl {
     private static Scanner inputInfo = new Scanner(System.in);
 
     /**
+     *        TABLE에 ID와 PW 저장
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
-     *        TABLE에 ID와 PW 저장
      */
     public void insert() {
 
@@ -75,11 +75,11 @@ public class DbControl {
     }
 
     /**
+     *        TABLE에 저장된 ID값과 일치하는 ID, PASSWORD 삭제
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
-     *        TABLE에 저장된 ID값과 일치하는 ID, PASSWORD 삭제
      */
     public void delete() {
 
@@ -122,11 +122,11 @@ public class DbControl {
     }
 
     /**
+     *        TABLE에 저장된 ID의 PW를 변경
      * 
      * @author "KyungHun Park"
-     * @since 2021. 8. 23.
+     * @since 2021. 9. 3.
      *
-     *        TABLE에 저장된 ID의 PW를 변경
      */
     public void update() {
 
@@ -167,11 +167,11 @@ public class DbControl {
     }
 
     /**
+     *        TABLE에 저장된 레코드를 Console에 출력
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      * 
-     *        TABLE에 저장된 레코드를 Console에 출력
      */
     public void read() {
 
@@ -211,11 +211,11 @@ public class DbControl {
     }
 
     /**
+     *        드라이버 로드 메소드
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
-     *        드라이버 로드 메소드
      */
     static void loadDriver() {
         try {

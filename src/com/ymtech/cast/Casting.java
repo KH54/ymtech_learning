@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ *        List를 Array로 Array를 List로 변환하는 class
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 3.
  *
- *        List를 Array로 Array를 List로 변환하는 class
  */
 public class Casting {
     public static void main(String[] args) {
@@ -29,6 +29,7 @@ public class Casting {
     }
     
     /**
+     *         array를 list로 변경
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
@@ -38,7 +39,6 @@ public class Casting {
      * 
      * @return 변경한 list 반환
      * 
-     *         array를 list로 변경
      */
     public static List<String> changeArr(String[] array, List<String> list) {
         list = Arrays.asList(array); // Arrays 클래스의 asList 메소드를 이용한 변환
@@ -52,6 +52,7 @@ public class Casting {
     }
 
     /**
+     *         list를 array로 변경
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
@@ -61,7 +62,6 @@ public class Casting {
      * 
      * @return 변경한 array 반환
      * 
-     *         list를 array로 변경
      */
     public static String[] changeList(List<String> list, String[] array) {
         array = list.toArray(new String[list.size()]); // toArray 메소드를 이용한 변환

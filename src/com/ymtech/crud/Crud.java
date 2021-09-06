@@ -5,11 +5,11 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 /**
+ *        DB의 'info' TABLE에 접근하여 사용자에게 입력 받은 값으로 CRUD 수행
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 03.
  * 
- *        DB의 'info' TABLE에 접근하여 사용자에게 입력 받은 값으로 CRUD 수행
  */
 public class Crud {
     public static void main(String[] args) {
@@ -27,7 +27,7 @@ public class Crud {
         int control = 0;
 
         // break까지 계속 수정이 가능하도록 While문 사용
-        while (control != 5) {
+        while (true) {
 
             try {
                 // 수행할 CRUD 선택
@@ -41,7 +41,7 @@ public class Crud {
 
                 // enter를 기준으로 값을 리턴하는 nextLine() 메소드. 입력된 값을 초기화 시켜준다.
                 controlCRUD.nextLine();
-                logger.info("\n 숫자를 입력해주세요", ie);
+                logger.info("\n 숫자를 입력해주세요") ;
                 continue; // 재입력 요청
 
             } catch (Exception e) { // 로그를 출력하고 시스템 종료
