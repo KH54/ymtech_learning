@@ -46,7 +46,7 @@ public class DbControl {
 
         // DB 연결 정보, SQL문을 전송할 객체
         try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("INSERT INTO info(id, password) VALUES(?,?)");) //
+                PreparedStatement stmt = con.prepareStatement("INSERT INTO info(id, password) VALUES(?,?)");) 
         {
 
             // 사용자에게 추가할 ID와 PW 입력 받음
