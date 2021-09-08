@@ -1,4 +1,11 @@
 package com.ymtech.board;
+/**
+ * 유저 필드, getter/setter
+ *
+ * @author "KyungHun Park"
+ * @since 2021. 9. 9. 오전 8:55:19
+ *
+ */
 public class User {
     // 유저 ID
     private String userId;
@@ -7,9 +14,12 @@ public class User {
     // 유저 닉네임
     private String userNick;
 
+    // 기본 생성자
     public User() {
         
     }
+    
+    // 생성자 오버로딩
     public User(String userId, String userPw, String userNick) {
         this.userId = userId;
         this.userPw = userPw;
@@ -82,6 +92,13 @@ public class User {
         this.userNick = userNick;
     }
     
+    /**
+     * 모든 필드 출력
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 9. 9. 오전 8:57:43
+     *
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

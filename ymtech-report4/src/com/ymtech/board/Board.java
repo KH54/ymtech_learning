@@ -1,5 +1,12 @@
 package com.ymtech.board;
 
+/**
+ * 게시글 필드, getter/setter 
+ *
+ * @author "KyungHun Park"
+ * @since 2021. 9. 9. 오전 8:54:10
+ *
+ */
 public class Board {
     // 게시글 작성 유저 ID - FK
     private String userId;
@@ -16,10 +23,12 @@ public class Board {
     // 조회수
     private int viewCount;
 
+    // 기본 생성자
     public Board() {
 
     }
 
+    // 생성자 오버로딩
     public Board(String userId, String title, String content, String createTime, String updateTime,int boardIndex, int viewCount) {
         this.userId = userId;
         this.title = title;
@@ -184,6 +193,8 @@ public class Board {
         this.viewCount = viewCount;
     }
 
+    
+     // 게시글 필드 String 출력
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

@@ -1,5 +1,12 @@
 package com.ymtech.board;
 
+/**
+ * 댓글 필드, getter/setter
+ *
+ * @author "KyungHun Park"
+ * @since 2021. 9. 9. 오전 8:58:00
+ *
+ */
 public class Comment {
     // 댓글 작성 유저 ID -- FK
     private String userId;
@@ -20,10 +27,12 @@ public class Comment {
     // 댓글 순서
     private int order;
 
+    // 기본 생성자
     public Comment() {
 
     }
 
+    // 생성자 오버로딩
     public Comment(String userId, String content, String createTime, String updateTime, int boardIndex, int commentIndex, int parentIndex, int depth, int order) {
         this.userId = userId;
         this.content = content;
@@ -234,6 +243,13 @@ public class Comment {
         this.order = order;
     }
 
+    /**
+     * 모든 필드 출력
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 9. 9. 오전 8:58:55
+     *
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
