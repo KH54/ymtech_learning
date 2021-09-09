@@ -1,106 +1,147 @@
 package com.ymtech.board;
 
-import java.sql.SQLException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
-/**
- * user, board, commentÀÇ CRUD Class
- *
- * @author "KyungHun Park"
- * @since 2021. 9. 9. ¿ÀÀü 12:41:06
- *
- */
 public class Main {
-    /**
-     * ¸ğµç CRUD¸¦ ÇÏ´Â ¸Ş¼Òµå // ºĞÇÒÇØ¾ßÇÔ.
-     *
-     * @author "KyungHun Park"
-     * @since 2021. 9. 9. ¿ÀÀü 12:41:22
-     *
-     * @param args
-     * @throws SQLException
-     */
-    public static void main(String[] args) throws SQLException {
-        UserCRUD user = new UserCRUD();
-        BoardCRUD board = new BoardCRUD();
-        CommentCRUD comment = new CommentCRUD();
 
-        /*-- User CRUD --*/
-        // »ç¿ëÀÚ Ãß°¡
-        if (user.insert() != 0) {
-            System.out.println("Ãß°¡ ¼º°ø");
-        } else {
-            System.out.println("Ãß°¡ ½ÇÆĞ");
-        }
+    public static void main(String[] args) {
 
-        // »ç¿ëÀÚ »èÁ¦ (user_id)
-        if (user.delete("user_id") != 0) {
-            System.out.println("»èÁ¦ ¼º°ø");
-        } else {
-            System.out.println("»èÁ¦ ½ÇÆĞ");
-        }
+        UserService userS = new UserService();
+        BoardService boardS = new BoardService();
+        CommentService commentS = new CommentService();
+//       TODO List<User> users = userdao.selectAll();      
+//            Optional<User> opBoardUser = users
+//                .stream().filter(user->user.getUserId() == board.getUserId()).findAny();
 
-        // »ç¿ëÀÚ Á¤º¸ ¼öÁ¤ ( À¯Àú¾ÆÀÌµğ )
-        if (user.update("user_id") > 0) {
-            System.out.println("¼öÁ¤ ¼º°ø");
-        } else {
-            System.out.println("¼öÁ¤ ½ÇÆĞ");
-        }
-        // ¿øÇÏ´Â »ç¿ëÀÚ Á¤º¸ ( À¯Àú¾ÆÀÌµğ )
-        user.select("user_id");
-        // ¸ğµç »ç¿ëÀÚ Á¤º¸
-        user.selectAll();
+        // ì‚¬ìš©ìì—ê²Œ ì…ë ¥ì„ ë°›ê¸° ìœ„í•œ Scanner Class ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
+        Scanner controlCRUD = new Scanner(System.in);
 
-        /*-- Board CRUD --*/
+        // ì‘ì—…ì„ ìˆ˜í–‰í•˜ê¸° ìœ„í•´ ì‚¬ìš©ìì—ê²Œ ì…ë ¥ ë°›ì€ ìˆ˜ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
+        int control = 0;
+        while (true) {
 
-        // °Ô½Ã±Û ÀÛ¼º (À¯Àú¾ÆÀÌµğ,Á¦¸ñ,³»¿ë)
-        if(board.insert("user_id", "title", "content") != 0) {
-            System.out.println("ÀÛ¼º ¼º°ø");
-        } else {
-            System.out.println("ÀÛ¼º ½ÇÆĞ");
-        }
+            try {
+                // ìˆ˜í–‰í•  CRUD ì„ íƒ
+                System.out.println("ì‘ì—…ì„ ìˆ˜í–‰í•  TABLEì„ ì„ íƒí•˜ì„¸ìš”");
+                System.out.println("1.User  2.Board  3.Comment  4.Quit");
 
-        // °Ô½Ã±Û »èÁ¦ (»èÁ¦ÇÒ boardIndex)
-        if (board.delete(1) != 0) {
-            System.out.println("»èÁ¦ ¼º°ø");
-        } else {
-            System.out.println("»èÁ¦ ½ÇÆĞ");
-        }
+                // ì‚¬ìš©ìì—ê²Œ ì‘ì—…ì„ ì…ë ¥ë°›ìŒ
+                control = controlCRUD.nextInt();
 
-        // °Ô½Ã±Û ¼öÁ¤ (Á¦¸ñ, ³»¿ë, boardIndex )
-        if (board.update("title", "content", 1) > 0) {
-            System.out.println("¼öÁ¤ ¼º°ø");
-        } else {
-            System.out.println("¼öÁ¤ ½ÇÆĞ");
-        }
+                switch (control) {
+                case 1:
 
-        // °Ô½Ã±Û ÀüÃ¼ º¸±â
-        board.selectAll();
+                    System.out.println("ìˆ˜í–‰í•  ì‘ì—…ì„ ì„ íƒí•˜ì„¸ìš”");
+                    System.out.println("1.INSERT  2.SELECT 3.SELECT_ALL 4.DELETE  5.UPDATE");
 
-        // °Ô½Ã±Û ¼±ÅÃÇØ¼­ º¸±â ( boardIndex )
-        board.select(1);
+                    control = controlCRUD.nextInt();
 
-        /*-- Comment CRUD --*/
+                    switch (control) {
 
-        // ´ñ±Û ÀÛ¼º ( À¯Àú¾ÆÀÌµğ, boardIndex, ³»¿ë, commentIndex )
-        if(comment.insert("user_id", 1, "content", 0) != 0) {
-            System.out.println("ÀÛ¼º ¼º°ø");
-        } else {
-            System.out.println("ÀÛ¼º ½ÇÆĞ");
-        }
+                    case 1:
+                        userS.insert();
+                        break;
 
-        // ´ñ±Û »èÁ¦ ( commentIndex )
-        if(comment.delete(0) != 0 ) {
-            System.out.println("»èÁ¦ ¼º°ø");
-        } else {
-            System.out.println("»èÁ¦ ½ÇÆĞ");
-        }
+                    case 2:
+                        userS.select();
+                        break;
 
-        // ´ñ±Û ¼öÁ¤ ( ³»¿ë, commentIndex )
-        if(comment.update("content", 0) > 0) {
-            System.out.println("¼öÁ¤ ¼º°ø");
-        } else {
-            System.out.println("¼öÁ¤ ½ÇÆĞ");
+                    case 3:
+                        userS.selectAll();
+                        break;
+
+                    case 4:
+                        userS.delete();
+                        break;
+
+                    case 5:
+                        userS.update();
+                        break;
+                    }
+                    break;
+                case 2:
+                    System.out.println("ìˆ˜í–‰í•  ì‘ì—…ì„ ì„ íƒí•˜ì„¸ìš”");
+                    System.out.println("1.INSERT  2.SELECT 3.SELECT_ALL 4.DELETE  5.UPDATE");
+
+                    control = controlCRUD.nextInt();
+
+                    switch (control) {
+                    case 1:
+                        boardS.insert();
+                        break;
+                    case 2:
+                        boardS.select();
+                        break;
+
+                    case 3:
+                        boardS.selectAll();
+                        break;
+
+                    case 4:
+                        boardS.delete();
+                        break;
+
+                    case 5:
+                        boardS.update();
+                        break;
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("ìˆ˜í–‰í•  ì‘ì—…ì„ ì„ íƒí•˜ì„¸ìš”");
+                    System.out.println("1.INSERT  2.SELECT  3.DELETE  4.UPDATE");
+
+                    control = controlCRUD.nextInt();
+
+                    switch (control) {
+
+                    case 1:
+                        commentS.insert();
+                        break;
+
+                    case 2:
+                        commentS.select();
+                        break;
+
+                    case 3:
+                        commentS.delete();
+                        break;
+
+                    case 4:
+                        commentS.update();
+                        break;
+                    }
+                    break;
+                case 4:
+                    System.out.println("System Exit");
+                    controlCRUD.close();
+                    System.exit(0);
+
+                default:
+                    System.out.println("ì„ íƒì§€ì— ìˆëŠ” ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”");
+                    break;
+                }
+
+            } catch (InputMismatchException ie) { // intí˜• íƒ€ì…ì´ ì•„ë‹Œ ê°’ì´ ì…ë ¥ë˜ì—ˆì„ ë•Œ ë¡œê·¸ë¥¼ ì¶œë ¥í•œ í›„ ì¬ì…ë ¥ ìš”ì²­
+                ie.printStackTrace();
+
+                // enterë¥¼ ê¸°ì¤€ìœ¼ë¡œ ê°’ì„ ë¦¬í„´í•˜ëŠ” nextLine() ë©”ì†Œë“œ. ì…ë ¥ëœ ê°’ì„ ì´ˆê¸°í™” ì‹œì¼œì¤€ë‹¤.
+                controlCRUD.nextLine();
+
+                continue; // ì¬ì…ë ¥ ìš”ì²­
+
+            } catch (Exception e) { // ë¡œê·¸ë¥¼ ì¶œë ¥í•˜ê³  ì‹œìŠ¤í…œ ì¢…ë£Œ
+                e.printStackTrace();
+                System.exit(0);
+            }
+
+            /* ì‚¬ìš©ìì˜ ì…ë ¥ì— ë”°ë¥¸ ë©”ì†Œë“œ í˜¸ì¶œ */
+            switch (control) {
+            case 1: // ì¶”ê°€
+
+            }
+            controlCRUD.nextLine(); // ì…ë ¥ë°›ì•˜ë˜ ë‚´ìš© ì´ˆê¸°í™”
         }
     }
-
 }

@@ -1,39 +1,40 @@
-package com.ymtech.board;
+package com.ymtech.board.vo;
 
 /**
- * ´ñ±Û ÇÊµå, getter/setter
+ * ï¿½ï¿½ï¿½ ï¿½Êµï¿½, getter/setter
  *
  * @author "KyungHun Park"
- * @since 2021. 9. 9. ¿ÀÀü 8:58:00
+ * @since 2021. 9. 9. ï¿½ï¿½ï¿½ï¿½ 8:58:00
  *
  */
 public class Comment {
-    // ´ñ±Û ÀÛ¼º À¯Àú ID -- FK
+    // ëŒ“ê¸€ ì‘ì„± ìœ ì € ID -- FK
     private String userId;
-    // ´ñ±Û ³»¿ë
+    // ëŒ“ê¸€ ë‚´ìš©
     private String content;
-    // ´ñ±Û ÀÛ¼º ½Ã°£
+    // ëŒ“ê¸€ ì‘ì„± ì‹œê°„
     private String createTime;
-    // ´ñ±Û ¼öÁ¤ ½Ã°£
+    // ëŒ“ê¸€ ìˆ˜ì • ì‹œê°„
     private String updateTime;
-    // °Ô½Ã±Û ¹øÈ£ -- FK
+    // ê²Œì‹œê¸€ ë²ˆí˜¸ -- FK
     private int boardIndex;
-    // ´ñ±Û ¹øÈ£
+    // ëŒ“ê¸€ ë²ˆí˜¸  -- PK
     private int commentIndex;
-    // ºÎ¸ğ ´ñ±Û ¹øÈ£
+    // ë¶€ëª¨ ëŒ“ê¸€ ë²ˆí˜¸
     private int parentIndex;
-    // ´ë´ñ±Û ±íÀÌ
+    // ëŒ€ëŒ“ê¸€ ê¹Šì´
     private int depth;
-    // ´ñ±Û ¼ø¼­
+    // ëŒ“ê¸€ ìˆœì„œ
     private int order;
 
-    // ±âº» »ı¼ºÀÚ
+    // ê¸°ë³¸ ìƒì„±ì
     public Comment() {
 
-    }
-
-    // »ı¼ºÀÚ ¿À¹ö·Îµù
+    }  
+    
+    // ìƒì„±ì ì˜¤ë²„ë¡œë”©
     public Comment(String userId, String content, String createTime, String updateTime, int boardIndex, int commentIndex, int parentIndex, int depth, int order) {
+        super();
         this.userId = userId;
         this.content = content;
         this.createTime = createTime;
@@ -46,10 +47,10 @@ public class Comment {
     }
 
     /**
-     * userIdÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * userIdì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return userId
      */
     public String getUserId() {
@@ -57,21 +58,21 @@ public class Comment {
     }
 
     /**
-     * userIdÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * userIdì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param userId
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param userId 
      */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
     /**
-     * contentÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * contentì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return content
      */
     public String getContent() {
@@ -79,21 +80,21 @@ public class Comment {
     }
 
     /**
-     * contentÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * contentì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param content
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param content 
      */
     public void setContent(String content) {
         this.content = content;
     }
 
     /**
-     * createTimeÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * createTimeì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return createTime
      */
     public String getCreateTime() {
@@ -101,21 +102,21 @@ public class Comment {
     }
 
     /**
-     * createTimeÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * createTimeì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param createTime
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param createTime 
      */
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
     /**
-     * updateTimeÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * updateTimeì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return updateTime
      */
     public String getUpdateTime() {
@@ -123,21 +124,21 @@ public class Comment {
     }
 
     /**
-     * updateTimeÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * updateTimeì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param updateTime
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param updateTime 
      */
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
     /**
-     * boardIndexÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * boardIndexì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return boardIndex
      */
     public int getBoardIndex() {
@@ -145,21 +146,21 @@ public class Comment {
     }
 
     /**
-     * boardIndexÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * boardIndexì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param boardIndex
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param boardIndex 
      */
     public void setBoardIndex(int boardIndex) {
         this.boardIndex = boardIndex;
     }
 
     /**
-     * commentIndexÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * commentIndexì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return commentIndex
      */
     public int getCommentIndex() {
@@ -167,21 +168,21 @@ public class Comment {
     }
 
     /**
-     * commentIndexÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * commentIndexì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param commentIndex
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param commentIndex 
      */
     public void setCommentIndex(int commentIndex) {
         this.commentIndex = commentIndex;
     }
 
     /**
-     * parentIndexÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * parentIndexì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return parentIndex
      */
     public int getParentIndex() {
@@ -189,21 +190,21 @@ public class Comment {
     }
 
     /**
-     * parentIndexÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * parentIndexì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param parentIndex
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param parentIndex 
      */
     public void setParentIndex(int parentIndex) {
         this.parentIndex = parentIndex;
     }
 
     /**
-     * depthÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * depthì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return depth
      */
     public int getDepth() {
@@ -211,21 +212,21 @@ public class Comment {
     }
 
     /**
-     * depthÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * depthì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param depth
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param depth 
      */
     public void setDepth(int depth) {
         this.depth = depth;
     }
 
     /**
-     * orderÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * orderì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
      * @return order
      */
     public int getOrder() {
@@ -233,21 +234,20 @@ public class Comment {
     }
 
     /**
-     * orderÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * orderì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param order
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:01
+     * @param order 
      */
     public void setOrder(int order) {
         this.order = order;
     }
 
     /**
-     * ¸ğµç ÇÊµå Ãâ·Â
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 9. ¿ÀÀü 8:58:55
+     * @since 2021. 9. 9. ì˜¤í›„ 8:44:08
      *
      */
     @Override
@@ -274,5 +274,6 @@ public class Comment {
         builder.append("]");
         return builder.toString();
     }
+
 
 }

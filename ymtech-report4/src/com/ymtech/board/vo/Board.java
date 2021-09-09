@@ -1,34 +1,30 @@
-package com.ymtech.board;
+package com.ymtech.board.vo;
 
-/**
- * °Ô½Ã±Û ÇÊµå, getter/setter 
- *
- * @author "KyungHun Park"
- * @since 2021. 9. 9. ¿ÀÀü 8:54:10
- *
- */
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Board {
-    // °Ô½Ã±Û ÀÛ¼º À¯Àú ID - FK
+    // ê²Œì‹œê¸€ ì‘ì„± ìœ ì € ID -- FK
     private String userId;
-    // °Ô½Ã±Û Á¦¸ñ
+    // ê²Œì‹œê¸€ ì œëª©
     private String title;
-    // °Ô½Ã±Û ³»¿ë
+    // ê²Œì‹œê¸€ ë‚´ìš©
     private String content;
-    // °Ô½Ã±Û ÀÛ¼º ½Ã°£
+    // ê²Œì‹œê¸€ ì‘ì„± ì‹œê°„
     private String createTime;
-    // °Ô½Ã±Û ¼öÁ¤ ½Ã°£
+    // ê²Œì‹œê¸€ ìˆ˜ì • ì‹œê°„
     private String updateTime;
-    // °Ô½Ã±Û ¹øÈ£
+    // ê²Œì‹œê¸€ ë²ˆí˜¸   -- PK
     private int boardIndex;
-    // Á¶È¸¼ö
+    // ì¡°íšŒìˆ˜
     private int viewCount;
 
-    // ±âº» »ı¼ºÀÚ
+    // ê¸°ë³¸ ìƒì„±ì
     public Board() {
 
     }
 
-    // »ı¼ºÀÚ ¿À¹ö·Îµù
+    // ìƒì„±ì ì˜¤ë²„ë¡œë”©
     public Board(String userId, String title, String content, String createTime, String updateTime,int boardIndex, int viewCount) {
         this.userId = userId;
         this.title = title;
@@ -38,12 +34,26 @@ public class Board {
         this.boardIndex = boardIndex;
         this.viewCount = viewCount;
     }
+    
+//    TODO public Board(ResultSet rs) {
+//        try {
+//            this.userId = rs.getString("user_id");
+//            this.title = rs.getString("title");
+//            this.content = rs.getString("content");
+//            this.createTime =  rs.getString("create_time");
+//            this.updateTime = rs.getString("update_time");
+//            this.boardIndex = boardIndex;
+//            this.viewCount = viewCount;
+//        } catch (SQLException e) {
+//            
+//        }
+//    }
 
     /**
-     * userIdÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * userIdì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
      * @return userId
      */
     public String getUserId() {
@@ -51,21 +61,21 @@ public class Board {
     }
 
     /**
-     * userIdÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * userIdì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param userId
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
+     * @param userId 
      */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
     /**
-     * titleÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * titleì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
      * @return title
      */
     public String getTitle() {
@@ -73,21 +83,21 @@ public class Board {
     }
 
     /**
-     * titleÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * titleì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param title
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
+     * @param title 
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * contentÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * contentì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
      * @return content
      */
     public String getContent() {
@@ -95,21 +105,21 @@ public class Board {
     }
 
     /**
-     * contentÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * contentì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param content
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
+     * @param content 
      */
     public void setContent(String content) {
         this.content = content;
     }
 
     /**
-     * createTimeÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * createTimeì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 8. ¿ÀÈÄ 7:22:37
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
      * @return createTime
      */
     public String getCreateTime() {
@@ -117,21 +127,21 @@ public class Board {
     }
 
     /**
-     * createTimeÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * createTimeì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 8. ¿ÀÈÄ 7:22:37
-     * @param createTime
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
+     * @param createTime 
      */
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
     /**
-     * updateTimeÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * updateTimeì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 8. ¿ÀÈÄ 7:22:37
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
      * @return updateTime
      */
     public String getUpdateTime() {
@@ -139,21 +149,21 @@ public class Board {
     }
 
     /**
-     * updateTimeÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * updateTimeì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 8. ¿ÀÈÄ 7:22:37
-     * @param updateTime
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
+     * @param updateTime 
      */
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
     /**
-     * boardIndexÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * boardIndexì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
      * @return boardIndex
      */
     public int getBoardIndex() {
@@ -161,21 +171,21 @@ public class Board {
     }
 
     /**
-     * boardIndexÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * boardIndexì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param boardIndex
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
+     * @param boardIndex 
      */
     public void setBoardIndex(int boardIndex) {
         this.boardIndex = boardIndex;
     }
 
     /**
-     * viewCountÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * viewCountì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
      * @return viewCount
      */
     public int getViewCount() {
@@ -183,18 +193,22 @@ public class Board {
     }
 
     /**
-     * viewCountÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * viewCountì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 7.
-     * @param viewCount
+     * @since 2021. 9. 9. ì˜¤í›„ 2:28:54
+     * @param viewCount 
      */
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
     }
 
-    
-     // °Ô½Ã±Û ÇÊµå String Ãâ·Â
+    /**
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 9. 9. ì˜¤í›„ 7:44:12
+     *
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -215,5 +229,4 @@ public class Board {
         builder.append("]");
         return builder.toString();
     }
-
 }

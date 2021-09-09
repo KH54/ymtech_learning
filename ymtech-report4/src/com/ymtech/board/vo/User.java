@@ -1,33 +1,33 @@
-package com.ymtech.board;
+package com.ymtech.board.vo;
 /**
- * À¯Àú ÇÊµå, getter/setter
+ * ìœ ì € í•„ë“œ, getter/setter
  *
  * @author "KyungHun Park"
- * @since 2021. 9. 9. ¿ÀÀü 8:55:19
+ * @since 2021. 9. 9. ì˜¤ì „ 8:55:19
  *
  */
 public class User {
-    // À¯Àú ID
+    // ìœ ì € ID -- PK
     private String userId;
-    // À¯Àú PW
-    private String userPw;
-    // À¯Àú ´Ğ³×ÀÓ
+    // ìœ ì € PW
+    private String userPwd;
+    // ìœ ì € ë‹‰ë„¤ì„
     private String userNick;
 
-    // ±âº» »ı¼ºÀÚ
+    // ê¸°ë³¸ ìƒì„±ì
     public User() {
-        
+       
     }
     
-    // »ı¼ºÀÚ ¿À¹ö·Îµù
-    public User(String userId, String userPw, String userNick) {
+    // ìƒì„±ì ì˜¤ë²„ë¡œë”©
+    public User(String userId, String userPwd, String userNick) {
         this.userId = userId;
-        this.userPw = userPw;
+        this.userPwd = userPwd;
         this.userNick = userNick;
     }
     
     /**
-     * userIdÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * userIdì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 7.
@@ -38,7 +38,7 @@ public class User {
     }
 
     /**
-     * userIdÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * userIdì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 7.
@@ -49,29 +49,29 @@ public class User {
     }
 
     /**
-     * userPwÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * userPwì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 7.
      * @return userPw
      */
-    public String getUserPw() {
-        return userPw;
+    public String getUserPwd() {
+        return userPwd;
     }
 
     /**
-     * userPwÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * userPwì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 7.
      * @param userPw
      */
-    public void setUserPw(String userPw) {
-        this.userPw = userPw;
+    public void setUserPwd(String userPwd) {
+        this.userPwd = userPwd;
     }
 
     /**
-     * userNickÀ»(¸¦) °¡Á®¿É´Ï´Ù.
+     * userNickì„(ë¥¼) ê°€ì ¸ì˜µë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 7.
@@ -82,7 +82,7 @@ public class User {
     }
 
     /**
-     * userNickÀ»(¸¦) ¼³Á¤ÇÕ´Ï´Ù.
+     * userNickì„(ë¥¼) ì„¤ì •í•©ë‹ˆë‹¤.
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 7.
@@ -93,10 +93,10 @@ public class User {
     }
     
     /**
-     * ¸ğµç ÇÊµå Ãâ·Â
+     * ëª¨ë“  í•„ë“œ ì¶œë ¥
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 9. ¿ÀÀü 8:57:43
+     * @since 2021. 9. 9. ì˜¤ì „ 8:57:43
      *
      */
     @Override
@@ -105,7 +105,7 @@ public class User {
         builder.append("User [userId=");
         builder.append(userId);
         builder.append(", userPw=");
-        builder.append(userPw);
+        builder.append(userPwd);
         builder.append(", userNick=");
         builder.append(userNick);
         builder.append("]");
