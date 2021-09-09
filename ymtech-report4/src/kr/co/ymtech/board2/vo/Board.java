@@ -1,9 +1,10 @@
-package com.ymtech.board.vo;
+package kr.co.ymtech.board2.vo;
+
 /**
  * 유저 필드, getter/setter
  *
  * @author "KyungHun Park"
- * @since 2021. 9. 10. 오전 8:47:14
+ * @since 2021. 9. 10. 오전 8:48:34
  *
  */
 public class Board {

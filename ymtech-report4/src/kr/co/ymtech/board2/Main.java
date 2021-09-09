@@ -1,4 +1,4 @@
-package com.ymtech.board;
+package kr.co.ymtech.board2;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -124,18 +124,23 @@ public class Main {
                 }
 
             } catch (InputMismatchException ie) { // int형 타입이 아닌 값이 입력되었을 때 로그를 출력한 후 재입력 요청
-                System.out.println("숫자만 입력해주세요");
+                ie.printStackTrace();
 
                 // enter를 기준으로 값을 리턴하는 nextLine() 메소드. 입력된 값을 초기화 시켜준다.
                 controlCRUD.nextLine();
 
                 continue; // 재입력 요청
 
-            } catch (Exception e) { 
-                System.out.println("DB 연결에 실패했습니다.");
+            } catch (Exception e) { // 로그를 출력하고 시스템 종료
+                e.printStackTrace();
                 System.exit(0);
             }
 
+            /* 사용자의 입력에 따른 메소드 호출 */
+            switch (control) {
+            case 1: // 추가
+
+            }
             controlCRUD.nextLine(); // 입력받았던 내용 초기화
         }
     }

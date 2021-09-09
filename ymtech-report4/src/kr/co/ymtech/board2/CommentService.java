@@ -1,4 +1,4 @@
-package com.ymtech.board;
+package kr.co.ymtech.board2;
 
 import java.util.Scanner;
 
