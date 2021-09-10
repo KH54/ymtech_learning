@@ -1,4 +1,8 @@
 package com.ymtech.board.vo;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * 유저 필드, getter/setter
  *
@@ -17,7 +21,7 @@ public class Board {
     private String createTime;
     // 게시글 수정 시간
     private String updateTime;
-    // 게시글 번호   -- PK
+    // 게시글 번호 -- PK
     private int boardIndex;
     // 조회수
     private int viewCount;
@@ -28,7 +32,7 @@ public class Board {
     }
 
     // 생성자 오버로딩
-    public Board(String userId, String title, String content, String createTime, String updateTime,int boardIndex, int viewCount) {
+    public Board(String userId, String title, String content, String createTime, String updateTime, int boardIndex, int viewCount) {
         this.userId = userId;
         this.title = title;
         this.content = content;
@@ -37,20 +41,17 @@ public class Board {
         this.boardIndex = boardIndex;
         this.viewCount = viewCount;
     }
-    
-//    TODO public Board(ResultSet rs) {
-//        try {
-//            this.userId = rs.getString("user_id");
-//            this.title = rs.getString("title");
-//            this.content = rs.getString("content");
-//            this.createTime =  rs.getString("create_time");
-//            this.updateTime = rs.getString("update_time");
-//            this.boardIndex = boardIndex;
-//            this.viewCount = viewCount;
-//        } catch (SQLException e) {
-//            
-//        }
-//    }
+
+    public Board(ResultSet rs) throws SQLException {
+        this.userId = rs.getString("user_id");
+        this.title = rs.getString("title");
+        this.content = rs.getString("content");
+        this.createTime = rs.getString("create_time");
+        this.updateTime = rs.getString("update_time");
+        this.boardIndex = rs.getInt("board_index");
+        this.viewCount = rs.getInt("view_count");
+
+    }
 
     /**
      * userId을(를) 가져옵니다.
@@ -68,7 +69,7 @@ public class Board {
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 9. 오후 2:28:54
-     * @param userId 
+     * @param userId
      */
     public void setUserId(String userId) {
         this.userId = userId;
@@ -90,7 +91,7 @@ public class Board {
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 9. 오후 2:28:54
-     * @param title 
+     * @param title
      */
     public void setTitle(String title) {
         this.title = title;
@@ -112,7 +113,7 @@ public class Board {
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 9. 오후 2:28:54
-     * @param content 
+     * @param content
      */
     public void setContent(String content) {
         this.content = content;
@@ -134,7 +135,7 @@ public class Board {
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 9. 오후 2:28:54
-     * @param createTime 
+     * @param createTime
      */
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
@@ -156,7 +157,7 @@ public class Board {
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 9. 오후 2:28:54
-     * @param updateTime 
+     * @param updateTime
      */
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
@@ -178,7 +179,7 @@ public class Board {
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 9. 오후 2:28:54
-     * @param boardIndex 
+     * @param boardIndex
      */
     public void setBoardIndex(int boardIndex) {
         this.boardIndex = boardIndex;
@@ -200,14 +201,14 @@ public class Board {
      *
      * @author "KyungHun Park"
      * @since 2021. 9. 9. 오후 2:28:54
-     * @param viewCount 
+     * @param viewCount
      */
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
     }
 
     /**
-     *
+     * 필드 값 출력
      * @author "KyungHun Park"
      * @since 2021. 9. 9. 오후 7:44:12
      *
@@ -215,21 +216,21 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Board [userId=");
+        builder.append("작성자=");
         builder.append(userId);
-        builder.append(", title=");
+        builder.append(", 제목=");
         builder.append(title);
-        builder.append(", content=");
+        builder.append(", 내용=");
         builder.append(content);
-        builder.append(", createTime=");
-        builder.append(createTime);
-        builder.append(", updateTime=");
-        builder.append(updateTime);
-        builder.append(", boardIndex=");
+        builder.append(", 게시물 번호=");
         builder.append(boardIndex);
-        builder.append(", viewCount=");
+        builder.append(", 조회수=");
         builder.append(viewCount);
-        builder.append("]");
+        builder.append(", 작성 시간=");
+        builder.append(createTime);
+        builder.append(", 수정 시간=");
+        builder.append(updateTime);
+        builder.append("\n");
         return builder.toString();
     }
 }

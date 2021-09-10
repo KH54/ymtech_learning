@@ -1,4 +1,8 @@
 package com.ymtech.board.vo;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * 유저 필드, getter/setter
  *
@@ -24,6 +28,12 @@ public class User {
         this.userId = userId;
         this.userPwd = userPwd;
         this.userNick = userNick;
+    }
+    
+    public User(ResultSet rs) throws SQLException {
+        this.userId = rs.getString("user_id");
+        this.userPwd = rs.getString("password");
+        this.userNick = rs.getString("nickname");
     }
     
     /**
@@ -102,13 +112,13 @@ public class User {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("User [userId=");
+        builder.append("유저ID=");
         builder.append(userId);
-        builder.append(", userPw=");
+        builder.append(", 유저 PW=");
         builder.append(userPwd);
-        builder.append(", userNick=");
+        builder.append(", 유저 별명=");
         builder.append(userNick);
-        builder.append("]");
+        builder.append("\n");
         return builder.toString();
     }
 
