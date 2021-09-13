@@ -118,7 +118,7 @@ public class UserDao implements IUserDao {
             
             // 중복된 ID 값을 입력한 경우
         } catch (SQLException se) { 
-           System.out.println("중복된 id가 있습니다. 다시 입력해주세요");
+           System.out.println("중복된 id가 있습니다.");
             // 다른 예외 발생시 종료
         }  catch( Exception e) {
             System.out.println("User insert Error");
