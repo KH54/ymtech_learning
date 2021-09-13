@@ -1,6 +1,6 @@
 package com.ymtech.board.service;
 
-import java.util.Scanner;
+import java.util.List;
 
 import com.ymtech.board.dao.IUserDao;
 import com.ymtech.board.dao.impl.UserDao;
@@ -15,20 +15,16 @@ import com.ymtech.board.vo.User;
  *
  */
 public class UserService {
-   
-    // User interface 
+
+    // User interface
     private IUserDao userDao;
     private IUserDao userDao2;
 
     // User 객체 생성
-    private User user = new User();
+//    private User user = new User();
 
     // 쿼리 작업을 위한 사용자 입력 값
-    private Scanner controlCRUD = new Scanner(System.in);
 
-    // 입력받은 변수를 저장
-    private String scanStr = "";
-    
     // interface 초기화
     public UserService() {
         this.userDao = new UserDao();
@@ -43,28 +39,11 @@ public class UserService {
      *
      * @return
      */
-    public int insert() {
-        // 사용자에게 새로 만들 유저의 정보를 입력 받음
-        System.out.println("ID, PW, 별명순으로 입력");
-        // id
-        scanStr = controlCRUD.next();
-        user.setUserId(scanStr);
-
-        // pwd
-        scanStr = controlCRUD.next();
-        user.setUserPwd(scanStr);
-
-        // nickName
-        scanStr = controlCRUD.next();
-        user.setUserNick(scanStr);
+    public int insert(User user) {
 
         // 성공 또는 실패 시
-        if (userDao.insert(user) > 0) {
-            System.out.println("추가 완료");
-            return 1;
-        } else {
-            return -1;
-        }
+
+        return userDao.insert(user) == 1 ? 1 : -1;
     }
 
     /**
@@ -74,20 +53,11 @@ public class UserService {
      * @since 2021. 9. 9. 오후 10:47:16
      *
      */
-    public void select() {
-        // 사용자에게 출력할 유저의 id를 입력 받음
-        System.out.println("ID입력");
+    public String select(User user) {
 
-        // id
-        scanStr = controlCRUD.next();
-        user.setUserId(scanStr);
+        String list = userDao.select(user);
 
-        if(userDao.select(user) != null) {
-            // 입력받은 id의 유저 정보 출력
-            System.out.println(userDao.select(user)); 
-        } else {
-            System.out.println("입력한 유저를 찾을 수 없습니다.");
-        }
+        return userDao.select(user) != null ? list : null;
     }
 
     /**
@@ -98,7 +68,12 @@ public class UserService {
      *
      */
     public void selectAll() {
-        System.out.println(userDao.selectAll().toString());
+
+        List<User> list = userDao.selectAll();
+
+        for (User user : list) {
+            System.out.println(user);
+        }
     }
 
     /**
@@ -109,22 +84,11 @@ public class UserService {
      *
      * @return
      */
-    public int delete() {
-        // 삭제할 유저의 id를 사용자에게 입력 받음
-        System.out.println("ID 입력");
-        scanStr = controlCRUD.next();
-
-        // 입력 받은 유저의 id를 전달
-        user.setUserId(scanStr);
+    public int delete(User user) {
 
         // 성공 또는 실패 시
-        if (userDao.delete(user) > 0) {
-            System.out.println("삭제 완료");
-            return 1;
-        } else {
-            System.out.println("삭제할 유저를 찾을 수 없습니다.");
-            return -1;
-        }
+
+        return userDao.delete(user) == 1 ? 1 : -1;
     }
 
     /**
@@ -135,30 +99,9 @@ public class UserService {
      *
      * @return
      */
-    public int update() {
-        // 수정할 유저의 id를 입력 받고, pw와 별명을 수정
-        System.out.println("ID, PW, 별명순으로 입력");
-
-        // id
-        scanStr = controlCRUD.next();
-        user.setUserId(scanStr);
-        // pwd
-        scanStr = controlCRUD.next();
-        user.setUserPwd(scanStr);
-
-        // str
-        scanStr = controlCRUD.next();
-        user.setUserNick(scanStr);
-
-
+    public int update(User user) {
         // 성공 또는 실패 시
-        if (userDao.update(user) > 0) {
-            System.out.println("업데이트 성공");
-            return 1;
-        } else {
-            System.out.println("업데이트할 유저를 찾을 수 없습니다.");
-            return -1;
-        }
+        return userDao.update(user) > 0 ? 1 : -1;
     }
 
     // <-- UserDao2 -->
@@ -167,123 +110,77 @@ public class UserService {
      * 유저 생성
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 10. 오후 1:17:06
+     * @since 2021. 9. 13. 오후 2:18:14
      *
+     * @param user
      * @return
      */
-    public int insertDao2() {
-        // 사용자에게 새로 만들 유저의 정보를 입력 받음
-        System.out.println("ID, PW, 별명순으로 입력");
-        // id
-        scanStr = controlCRUD.next();
-        user.setUserId(scanStr);
-
-        // pwd
-        scanStr = controlCRUD.next();
-        user.setUserPwd(scanStr);
-
-        // nickName
-        scanStr = controlCRUD.next();
-        user.setUserNick(scanStr);
+    public int insertDao2(User user) {
 
         // 성공 또는 실패 시
-        if (userDao2.insert(user) > 0) {
-            System.out.println("추가 완료");
-            return 1;
-        } else {
-            System.out.println("추가 실패");
-            return -1;
-        }
+
+        return userDao2.insert(user) == 1 ? 1 : -1;
     }
 
     /**
      * 원하는 유저 출력
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 10. 오후 1:17:24
+     * @since 2021. 9. 13. 오후 2:18:06
      *
+     * @param user
+     * @return
      */
-    public void selectDao2() {
-        // 사용자에게 출력할 유저의 id를 입력 받음
-        System.out.println("ID입력");
+    public String selectDao2(User user) {
 
-        // id
-        scanStr = controlCRUD.next();
-        user.setUserId(scanStr);
+        String list = userDao2.select(user);
 
-        // 입력받은 id의 유저 정보 출력
-        System.out.println(userDao2.select(user));
+        return userDao2.select(user) != null ? list : null;
     }
 
     /**
      * 모든 유저 출력
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 10. 오후 1:17:41
+     * @since 2021. 9. 13. 오후 2:17:59
      *
      */
     public void selectAllDao2() {
-        System.out.println(userDao2.selectAll().toString());
+
+        List<User> list = userDao2.selectAll();
+
+        for (User user : list) {
+            System.out.println(user);
+        }
     }
 
     /**
      * 유저 삭제
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 10. 오후 1:17:45
+     * @since 2021. 9. 13. 오후 2:17:53
      *
+     * @param user
      * @return
      */
-    public int deleteDao2() {
-        // 삭제할 유저의 id를 사용자에게 입력 받음
-        System.out.println("ID 입력");
-        scanStr = controlCRUD.next();
-
-        // 입력 받은 유저의 id를 전달
-        user.setUserId(scanStr);
+    public int deleteDao2(User user) {
 
         // 성공 또는 실패 시
-        if (userDao2.delete(user) > 0) {
-            System.out.println("삭제 완료");
-            return 1;
-        } else {
-            System.out.println("삭제할 ID가 없습니다.");
-            return -1;
-        }
+
+        return userDao2.delete(user) == 1 ? 1 : -1;
     }
 
     /**
-     * 유저 정보 업데이트
+     * 유저 정보 수정
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 10. 오후 1:17:53
+     * @since 2021. 9. 13. 오후 2:17:45
      *
+     * @param user
      * @return
      */
-    public int updateDao2() {
-        // 수정할 유저의 id를 입력 받고, pw와 별명을 수정
-        System.out.println("ID, PW, 별명순으로 입력");
-
-        // pwd
-        scanStr = controlCRUD.next();
-        user.setUserPwd(scanStr);
-
-        // str
-        scanStr = controlCRUD.next();
-        user.setUserNick(scanStr);
-
-        // id
-        scanStr = controlCRUD.next();
-        user.setUserId(scanStr);
-
+    public int updateDao2(User user) {
         // 성공 또는 실패 시
-        if (userDao2.update(user) > 0) {
-            System.out.println("업데이트 성공");
-            return 1;
-        } else {
-            System.out.println("업데이트 실패");
-            return -1;
-        }
+        return userDao2.update(user) > 0 ? 1 : -1;
     }
-    
 }

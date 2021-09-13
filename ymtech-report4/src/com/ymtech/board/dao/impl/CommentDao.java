@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.ymtech.board.dao.ICommentDao;
 import com.ymtech.board.vo.Comment;
+
 /**
  * Comment의 crud
  *
@@ -34,9 +35,7 @@ public class CommentDao implements ICommentDao {
         Comment commentInfo;
 
         // DB 연결 및 쿼리 호출 실행
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_SELECT); 
-                ResultSet rs = stmt.executeQuery();) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_SELECT); ResultSet rs = stmt.executeQuery();) {
 
             // 쿼리문의 결과를 출력하여 저장
             while (rs.next()) {
@@ -45,8 +44,10 @@ public class CommentDao implements ICommentDao {
             }
 
             // 예외 발생 시 종료
+        } catch (SQLException e) {
+            System.out.println("Comment select SQL Error");
         } catch (Exception e) {
-            System.out.println("Comment select Error");
+            System.out.println("Comment select error");
             System.exit(0);
         }
         return commentList;
@@ -64,8 +65,7 @@ public class CommentDao implements ICommentDao {
         int result = 0;
 
         // DB 연결 및 쿼리 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_INSERT);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_INSERT);) {
 
             // 쿼리문에 정보 입력
             stmt.setString(1, comment.getUserId());
@@ -75,7 +75,7 @@ public class CommentDao implements ICommentDao {
 
             // 쿼리 실행
             result = stmt.executeUpdate();
-            
+
             // 예외 발생시 종료
         } catch (SQLException e) {
             System.out.println("댓글을 입력할 게시물을 찾을 수 없습니다.");
@@ -95,17 +95,18 @@ public class CommentDao implements ICommentDao {
         int result = 0;
 
         // DB 연결 및 쿼리 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD);
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_DELETE);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_DELETE);) {
 
             // 쿼리에 정보 입력
             stmt.setInt(1, comment.getCommentIndex());
 
             // 쿼리 실행
             result = stmt.executeUpdate();
-            
+
             // 예외 발생시 종료
-        } catch (Exception e) { 
+        } catch (SQLException e) {
+            System.out.println("Comment delete SQL Error");
+        } catch (Exception e) {
             System.out.println("comment delete Error");
             System.exit(0);
         }
@@ -127,16 +128,18 @@ public class CommentDao implements ICommentDao {
         // DB 연결 및 쿼리 호출 및 실행
         try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
                 PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_UPDATE); 
-                ResultSet rs = stmt.executeQuery();) {
+              ) {
 
             // 쿼리문에 정보 입력
             stmt.setString(1, comment.getContent());
             stmt.setInt(2, comment.getCommentIndex());
 
-            // 쿼리  실행
+            // 쿼리 실행
             result = stmt.executeUpdate();
 
             // 예외 발생시 종료
+        } catch (SQLException e) {
+            System.out.println("Comment update SQL Error");
         } catch (Exception e) {
             System.out.println("Comment update Error");
             System.exit(0);

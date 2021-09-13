@@ -53,9 +53,10 @@ public class User {
      * @author "KyungHun Park"
      * @since 2021. 9. 7.
      * @param userId
+     * @return 
      */
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String setUserId(String userId) {
+        return this.userId = userId;
     }
 
     /**
@@ -118,7 +119,6 @@ public class User {
         builder.append(userPwd);
         builder.append(", 유저 별명=");
         builder.append(userNick);
-        builder.append("\n");
         return builder.toString();
     }
 
