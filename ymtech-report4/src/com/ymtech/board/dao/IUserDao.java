@@ -42,7 +42,7 @@ public interface IUserDao {
      * @param user
      * @return
      */
-    public String select(User user);
+    public User select(User user);
     
     /**
      * 유저 삭제 메소드

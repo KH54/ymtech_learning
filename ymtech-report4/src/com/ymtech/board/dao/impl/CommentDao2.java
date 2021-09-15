@@ -1,9 +1,5 @@
 package com.ymtech.board.dao.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +13,7 @@ import com.ymtech.board.vo.Comment;
  * @since 2021. 9. 9. 오후 10:15:33
  *
  */
-public class CommentDao2 implements ICommentDao {
+public class CommentDao2 extends GenericDao<Comment, Integer> implements ICommentDao {
 
     /**
      * 모든 댓글을 출력하는 메소드
@@ -28,30 +24,23 @@ public class CommentDao2 implements ICommentDao {
      */
     public List<Comment> select() {
 
-        // 모든 댓글의 정보를 담을 list
-        ArrayList<Comment> commentList = new ArrayList<Comment>();
-        // 게시글의 정보를 담을 commentInfo
-        Comment commentInfo;
-
         // DB 연결 및 쿼리 호출 실행
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_SELECT); 
-                ResultSet rs = stmt.executeQuery();) {
+        try {
+            // 상속받은 Generic의 selectAll 메소드의 결과 값을 반환
+            return super.selectAll(DB.SQL_COMMENT_SELECT, (rs) -> {
+                try {
+                    // User에 ResultSet을 매개변수로 하는 생성자의 반환 값을 매개변수로
+                    return new Comment(rs);
+                } catch (SQLException ignor) {
+                    return null;
+                }
+            });
 
-            // 쿼리문의 결과를 출력하여 저장
-            while (rs.next()) {
-                commentInfo = new Comment(rs.getString("user_id"), rs.getString("content"), 
-                        rs.getString("create_time"), rs.getString("update_time"), rs.getInt("board_index"), 
-                        rs.getInt("comment_index"), rs.getInt("parent_index"), rs.getInt("depth"),rs.getInt("order"));
-                commentList.add(commentInfo);
-            }
+        } catch (SQLException e) {
+            System.out.println("Comment select SQL Error");
 
-            // 예외 발생 시 종료
-        } catch (Exception e) {
-            System.out.println("Comment select Error");
-            System.exit(0);
         }
-        return commentList;
+        return null;
     }
 
     /**
@@ -62,28 +51,20 @@ public class CommentDao2 implements ICommentDao {
      *
      */
     public Integer insert(Comment comment) {
-        // insert 성공 여부를 확인할 변수
-        int result = 0;
+        // 사용자 입력 값을 저장하기 위한 list
+        List<Object> list = new ArrayList<>();
 
-        // DB 연결 및 쿼리 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_INSERT);) {
-
-            // 쿼리문에 정보 입력
-            stmt.setString(1, comment.getUserId());
-            stmt.setInt(2, comment.getBoardIndex());
-            stmt.setString(3, comment.getContent());
-            stmt.setInt(4, comment.getParentIndex());
-
-            // 쿼리 실행
-            result = stmt.executeUpdate();
-            
-            // 예외 발생시 종료
+        list.add(comment.getUserId());
+        list.add(comment.getBoardIndex());
+        list.add(comment.getContent());
+        list.add(comment.getParentIndex());
+        try {
+            // 상속받은 Generic의 insert 메소드의 결과 값을 반환
+            return super.insert(DB.SQL_COMMENT_INSERT, list);
         } catch (SQLException e) {
-            System.out.println("Comment insert Error");
-            System.exit(0);
+            System.out.println("Comment insert SQL Error");
         }
-        return result;
+        return null;
     }
 
     /**
@@ -94,26 +75,14 @@ public class CommentDao2 implements ICommentDao {
      *
      */
     public Integer delete(Comment comment) {
-        // delete 성공 여부를 확인할 변수
-        int result = 0;
 
-        // DB 연결 및 쿼리 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD);
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_DELETE);) {
-
-            // 쿼리에 정보 입력
-            stmt.setInt(1, comment.getCommentIndex());
-
-            // 쿼리 실행
-            result = stmt.executeUpdate();
-            
-            // 예외 발생시 종료
-        } catch (Exception e) { 
-            System.out.println("comment delete Error");
-            System.exit(0);
+        try {
+            // 상속받은 Generic의 delete 메소드의 결과 값을 반환
+            return super.delete(DB.SQL_COMMENT_DELETE, comment.getCommentIndex());
+        } catch (SQLException e) {
+            System.out.println("Comment delete SQL Error");
         }
-
-        return result;
+        return null;
     }
 
     /**
@@ -124,26 +93,18 @@ public class CommentDao2 implements ICommentDao {
      *
      */
     public Integer update(Comment comment) {
-        // update 성공 여부를 확인할 변수
-        int result = 0;
+        // 사용자 입력 값을 저장하기 위한 list
+        List<Object> list = new ArrayList<>();
 
-        // DB 연결 및 쿼리 호출 및 실행
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_COMMENT_UPDATE); 
-                ResultSet rs = stmt.executeQuery();) {
+        list.add(comment.getContent());
+        list.add(comment.getCommentIndex());
 
-            // 쿼리문에 정보 입력
-            stmt.setString(1, comment.getContent());
-            stmt.setInt(2, comment.getCommentIndex());
-
-            // 쿼리  실행
-            result = stmt.executeUpdate();
-
-            // 예외 발생시 종료
-        } catch (Exception e) {
-            System.out.println("Comment update Error");
-            System.exit(0);
+        try {
+            // 상속받은 Generic의 update 메소드의 결과 값을 반환
+            return super.update(DB.SQL_COMMENT_UPDATE, list);
+        } catch (SQLException e) {
+            System.out.println("Board update SQL Error");
         }
-        return result;
+        return null;
     }
 }
