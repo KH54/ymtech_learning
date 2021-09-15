@@ -1,5 +1,6 @@
 package com.ymtech.board.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.ymtech.board.dao.IBoardDao;
@@ -47,9 +48,9 @@ public class BoardService {
      * @since 2021. 9. 9. 오후 10:52:50
      *
      */
-    public String select(Board board) {
+    public Board select(Board board) {
 
-        String list = boardDao.select(board);
+        Board list = boardDao.select(board);
 
         return boardDao.select(board) != null ? list : null;
     }
@@ -62,13 +63,13 @@ public class BoardService {
      *
      */
     public void selectAll() {
+        
         List<Board> list = boardDao.selectAll();
 
-        for (Board board : list) {
-            System.out.println(board);
+            for (Board board : list) {
+                System.out.println(board);
+            }
         }
-    }
-
     /**
      * 게시글 삭제
      *
@@ -125,9 +126,9 @@ public class BoardService {
      * @param board
      * @return
      */
-    public String selectDao2(Board board) {
+    public Board selectDao2(Board board) {
 
-        String list = boardDao2.select(board);
+        Board list = boardDao2.select(board);
 
         return boardDao2.select(board) != null ? list : null;
     }
@@ -136,10 +137,11 @@ public class BoardService {
      * 모든 게시글 출력
      *
      * @author "KyungHun Park"
+     * @throws SQLException 
      * @since 2021. 9. 13. 오후 2:19:39
      *
      */
-    public void selectAllDao2() {
+    public void selectAllDao2() throws SQLException {
         List<Board> list = boardDao2.selectAll();
 
         for (Board board : list) {

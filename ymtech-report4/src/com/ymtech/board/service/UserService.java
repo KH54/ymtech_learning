@@ -53,11 +53,14 @@ public class UserService {
      * @since 2021. 9. 9. 오후 10:47:16
      *
      */
-    public String select(User user) {
+    public User select(User user) {
 
-        String list = userDao.select(user);
+        User user2;
+        user2 = userDao.select(user);
+        
+        
 
-        return userDao.select(user) != null ? list : null;
+        return user2;
     }
 
     /**
@@ -131,12 +134,12 @@ public class UserService {
      * @param user
      * @return
      */
-    public String selectDao2(User user) {
-
-        String list = userDao2.select(user);
-
-        return userDao2.select(user) != null ? list : null;
-    }
+//    public String selectDao2(User user) {
+//
+//        String list = userDao2.select(user);
+//
+//        return userDao2.select(user) != null ? list : null;
+//    }
 
     /**
      * 모든 유저 출력

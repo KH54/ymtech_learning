@@ -1,193 +1,136 @@
 package com.ymtech.board.dao.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ymtech.board.dao.IUserDao;
 import com.ymtech.board.vo.User;
+
 /**
- * User의 crud
+ * User Crud
  *
  * @author "KyungHun Park"
- * @since 2021. 9. 9. 오후 9:39:03
+ * @since 2021. 9. 15. 오전 11:21:21
  *
  */
-public class UserDao implements IUserDao {
+public class UserDao extends GenericDao<User, String> implements IUserDao {
 
     /**
-     * 모든 유저 정보를 출력하는 메소드
+     * 모든 유저를 출력하는 메소드
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 9. 오후 10:03:59
+     * @since 2021. 9. 15. 오전 11:21:32
      *
      */
     public List<User> selectAll() {
 
-        // 모든 유저의 정보를 담을 list
-        ArrayList<User> userList = new ArrayList<User>();
-        // 유저 정보를 담을 userInfo
-        User userInfo;
-
-        // DB 연결 및 쿼리 호출 실행
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_USER_SELECT); 
-                ResultSet rs = stmt.executeQuery();) {
-            
-            // 쿼리문의 결과를 출력하여 저장
-            while (rs.next()) {
-                userInfo = new User(rs);
-                userList.add(userInfo);
-            }
-            
-        } catch (SQLException se) {
+        try {
+            // 상속받은 Generic의 selectAll 메소드의 결과 값을 반환
+            return super.selectAll(DB.SQL_USER_SELECT, (rs) -> {
+                try {
+                    // User에 ResultSet을 매개변수로 하는 생성자의 반환 값을 매개변수로
+                    return new User(rs);
+                } catch (SQLException ignore) {
+                    System.out.println("User selectAll SQL Error");
+                }
+                return null;
+            });
+        } catch (SQLException e) {
             System.out.println("User selectAll SQL Error");
-         } 
-        catch(Exception e) {
-            System.out.println("User selectAll Error");
-            System.exit(0);
+            return null;
         }
-        return userList;
     }
 
     /**
-     * 원하는 유저의 정보를 출력하는 메소드
+     * 입력받은 한 유저만 출력하는 메소드
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 9. 오후 10:06:18
+     * @since 2021. 9. 15. 오전 11:21:45
      *
      */
-    public String select(User user) {
-        
-        // 선택한 유저의 정보를 담을 객체
-        User userInfo = null;
-        // 담은 정보를 String으로 저장
-        String Info = null;
-        
-        // DB 연결 및 쿼리 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_USER_SELECT_ID); ) {
+    public User select(User user) {
 
-            // 입력받은 ID를 쿼리에 입력
-            stmt.setString(1, user.getUserId());
-            // 쿼리 실행
-            ResultSet rs = stmt.executeQuery();
-     
-            // 쿼리문으로 호출한 게시물의 정보를 저장
-            while (rs.next()) {
-                userInfo = new User(rs);
-                Info = userInfo.toString();
-            }
-
-        } catch (SQLException se) {
+        try {
+            // 상속받은 Generic의 select 메소드의 결과 값을 반환
+            return super.select(user.getUserId(), DB.SQL_USER_SELECT_ID, (rs) -> {
+                try {
+                    // User에 ResultSet을 매개변수로 하는 생성자의 반환 값을 매개변수로
+                    return new User(rs);
+                } catch (SQLException ignore) {
+                    return null;
+                }
+            });
+        } catch (SQLException e) {
             System.out.println("User select SQL Error");
-         } 
-        // 예외 발생 시 종료
-         catch (Exception e) {
-           System.out.println("User select Error");
-        } 
-        return Info;
+            return null;
+        }
     }
 
     /**
-     * 유저 추가 메소드
+     * 유저를 추가하는 메소드
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 9. 오후 10:08:37
+     * @since 2021. 9. 15. 오후 1:24:18
      *
      */
     public Integer insert(User user) {
-        // insert 성공 여부를 확인할 변수
-        int result = 0;
+        // 사용자 입력 값을 저장하기 위한 list
+        List<String> list = new ArrayList<String>();
 
-        // DB 연결 및 쿼리 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_USER_INSERT);) {
+        list.add(user.getUserId());
+        list.add(user.getUserPwd());
+        list.add(user.getUserNick());
 
-            // 쿼리문에 정보 입력
-            stmt.setString(1, user.getUserId());
-            stmt.setString(2, user.getUserPwd());
-            stmt.setString(3, user.getUserNick());
-            
-            // 쿼리 실행
-            result = stmt.executeUpdate();
-            
-            // 중복된 ID 값을 입력한 경우
-        } catch (SQLException se) { 
-           System.out.println("중복된 id가 있습니다.");
-            // 다른 예외 발생시 종료
-        }  catch( Exception e) {
-            System.out.println("User insert Error");
-            System.exit(0);
+        try {
+            // 상속받은 Generic의 insert 메소드의 결과 값을 반환
+            return super.insert(DB.SQL_USER_INSERT, list);
+        } catch (SQLException e) {
+            System.out.println("User insert SQL error");
         }
-        return result;
+        return null;
     }
 
     /**
      * 유저 삭제 메소드
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 9. 오후 10:11:41
+     * @since 2021. 9. 15. 오후 1:24:32
      *
      */
     public Integer delete(User user) {
 
-        // delete 성공 여부를 확인할 변수
-        int result = 0;
-
-        // DB 연결 및 쿼리 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_USER_DELETE);) {
-
-            // 쿼리문에 정보 입력
-            stmt.setString(1, user.getUserId());
-            
-            // 쿼리 실행
-            result = stmt.executeUpdate();
-
-            // 예외 발생 시 종료
-        } catch (SQLException se) { 
-            System.out.println("작성한 글과 댓글이 있어 현재는 삭제 불가");
-        } catch (Exception e) {
-            System.out.println("User delete Error");
-            System.exit(0);
+        try {
+            // 상속받은 Generic의 delete 메소드의 결과 값을 반환
+            return super.delete(DB.SQL_USER_DELETE, user.getUserId());
+        } catch (SQLException e) {
+            System.out.println("User delete SQL error");
         }
-        return result;
+        return null;
     }
 
     /**
-     * 유저 정보 수정 메소드
+     * 유저 수정 메소드
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 9. 오후 10:13:43
+     * @since 2021. 9. 15. 오후 1:24:46
      *
      */
     public Integer update(User user) {
-        // update 성공 여부를 확인할 변수
-        int result = 0;
+        // 사용자 입력 값을 저장하기 위한 list
+        List<String> list = new ArrayList<>();
 
-        // DB 연결 및 쿼리 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(DB.SQL_USER_UPDATE); ) {
+        list.add(user.getUserPwd());
+        list.add(user.getUserNick());
+        list.add(user.getUserId());
 
-            // 쿼리문에 정보 입력
-            stmt.setString(1, user.getUserPwd());
-            stmt.setString(2, user.getUserNick());
-            stmt.setString(3, user.getUserId());
-
-            // 쿼리 실행
-            result = stmt.executeUpdate();
-
-            // 예외 발생 시 종료
-        } catch (SQLException e) { 
-          System.out.println("DB 오류. 종료합니다");
-            System.exit(0);
+        try {
+            // 상속받은 Generic의 update 메소드의 결과 값을 반환
+            return super.update(DB.SQL_USER_UPDATE, list);
+        } catch (SQLException e) {
+            System.out.println("User update SQL error");
         }
-        return result;
+        return null;
     }
 
 }
