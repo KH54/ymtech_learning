@@ -1,5 +1,6 @@
 package com.ymtech.board.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.ymtech.board.vo.Board;
@@ -20,6 +21,7 @@ public interface IBoardDao {
      * @since 2021. 9. 9. 오후 9:23:35
      *
      * @return
+     * @throws SQLException 
      */
     public List<Board> selectAll();
 
@@ -32,7 +34,7 @@ public interface IBoardDao {
      * @param board
      * @return
      */
-    public String select(Board board);
+    public Board select(Board board);
 
     /**
      * 게시글 작성 메소드
