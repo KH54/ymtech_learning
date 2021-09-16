@@ -20,22 +20,22 @@ public class User {
 
     // 기본 생성자
     public User() {
-       
+
     }
-    
+
     // 생성자 오버로딩
     public User(String userId, String userPwd, String userNick) {
         this.userId = userId;
         this.userPwd = userPwd;
         this.userNick = userNick;
     }
-    
+
     public User(ResultSet rs) throws SQLException {
         this.userId = rs.getString("user_id");
         this.userPwd = rs.getString("password");
         this.userNick = rs.getString("nickname");
     }
-    
+
     /**
      * userId을(를) 가져옵니다.
      *
@@ -53,7 +53,7 @@ public class User {
      * @author "KyungHun Park"
      * @since 2021. 9. 7.
      * @param userId
-     * @return 
+     * @return
      */
     public String setUserId(String userId) {
         return this.userId = userId;
@@ -102,7 +102,7 @@ public class User {
     public void setUserNick(String userNick) {
         this.userNick = userNick;
     }
-    
+
     /**
      * 모든 필드 출력
      *
@@ -121,5 +121,4 @@ public class User {
         builder.append(userNick);
         return builder.toString();
     }
-
 }

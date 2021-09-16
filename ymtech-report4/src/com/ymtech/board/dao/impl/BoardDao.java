@@ -1,8 +1,9 @@
 package com.ymtech.board.dao.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import com.ymtech.board.dao.IBoardDao;
 import com.ymtech.board.vo.Board;
@@ -24,19 +25,14 @@ public class BoardDao extends GenericDao<Board, Integer> implements IBoardDao {
      *
      */
     public List<Board> selectAll() {
-        try {
-            // 상속받은 Generic의 selectAll 메소드의 결과 값을 반환
-            return super.selectAll(DB.SQL_BOARD_SELECT_ALL, (rs) -> {
-                try {
-                    return new Board(rs);
-                } catch (SQLException ignore) {
-                    return null;
-                }
-            });
-        } catch (SQLException e) {
-            System.out.println("Board selectAll SQL Error");
-        }
-        return null;
+        // 상속받은 Generic의 selectAll 메소드의 결과 값을 반환
+        return super.selectAll(DB.SQL_BOARD_SELECT_ALL, (rs) -> {
+            try {
+                return new Board(rs);
+            } catch (SQLException ignore) {
+                return null;
+            }
+        });
     }
 
     /**
@@ -47,44 +43,40 @@ public class BoardDao extends GenericDao<Board, Integer> implements IBoardDao {
      *
      */
     public Board select(Board board) {
-        try {
-            // 상속받은 Generic의 select 메소드의 결과 값을 반환
-            return super.select(DB.SQL_BOARD_DELETE, board.getBoardIndex(), (rs) -> {
-                try {
-                    // User에 ResultSet을 매개변수로 하는 생성자의 반환 값을 매개변수로
-                    return new Board(rs);
-                } catch (SQLException ignore) {
-                    return null;
-                }
-            });
-        } catch (SQLException e) {
-            System.out.println("Board select SQL Error");
-            return null;
-        }
+
+        // 상속받은 Generic의 select 메소드의 결과 값을 반환
+        return super.select(DB.SQL_BOARD_DELETE, board.getBoardIndex(), (rs) -> {
+            try {
+                // User에 ResultSet을 매개변수로 하는 생성자의 반환 값을 매개변수로
+                return new Board(rs);
+            } catch (SQLException ignore) {
+                return null;
+            }
+        });
     }
 
     /**
      * 게시글 작성 메소드
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 9. 오후 9:41:35
-     *
+     * @since 2021. 9. 16. 오후 1:32:20
+     * @see
      */
     public Integer insert(Board board) {
-        // 사용자 입력 값을 저장하기 위한 list
-        List<Object> list = new ArrayList<>();
+        // 상속받은 Generic의 insert 메소드의 결과 값을 반환
+        return super.insert(board, DB.SQL_BOARD_INSERT, new BiConsumer<PreparedStatement, Board>() {
 
-        list.add(board.getUserId());
-        list.add(board.getTitle());
-        list.add(board.getContent());
-
-        try {
-            // 상속받은 Generic의 insert 메소드의 결과 값을 반환
-            return super.insert(DB.SQL_BOARD_INSERT, list);
-        } catch (SQLException e) {
-            System.out.println("Board insert SQL Error");
-        }
-        return null;
+            @Override
+            public void accept(PreparedStatement stmt, Board board) {
+                try {
+                    stmt.setString(1, board.getUserId());
+                    stmt.setString(2, board.getTitle());
+                    stmt.setString(3, board.getContent());
+                } catch (SQLException e) {
+                    System.out.println("BoardDao insert accpet Error");
+                }
+            }
+        });
     }
 
     /**
@@ -95,14 +87,8 @@ public class BoardDao extends GenericDao<Board, Integer> implements IBoardDao {
      *
      */
     public Integer delete(Board board) {
-
-        try {
-            // 상속받은 Generic의 delete 메소드의 결과 값을 반환
-            return super.delete(DB.SQL_BOARD_DELETE, board.getBoardIndex());
-        } catch (SQLException e) {
-            System.out.println("Board delete SQL Error");
-        }
-        return null;
+        // 상속받은 Generic의 delete 메소드의 결과 값을 반환
+        return super.delete(DB.SQL_BOARD_DELETE, board.getBoardIndex());
     }
 
     /**
@@ -113,19 +99,19 @@ public class BoardDao extends GenericDao<Board, Integer> implements IBoardDao {
      *
      */
     public Integer update(Board board) {
-        // 사용자 입력 값을 저장하기 위한 list
-        List<Object> list = new ArrayList<>();
 
-        list.add(board.getTitle());
-        list.add(board.getContent());
-        list.add(board.getBoardIndex());
+        return super.update(board, DB.SQL_BOARD_UPDATE, new BiConsumer<PreparedStatement, Board>() {
 
-        try {
-            // 상속받은 Generic의 update 메소드의 결과 값을 반환
-            super.update(DB.SQL_BOARD_UPDATE, list);
-        } catch (SQLException e) {
-            System.out.println("Board update SQL Error");
-        }
-        return null;
+            @Override
+            public void accept(PreparedStatement stmt, Board board) {
+                try {
+                    stmt.setString(1, board.getTitle());
+                    stmt.setString(2, board.getContent());
+                    stmt.setInt(3, board.getBoardIndex());
+                } catch (SQLException e) {
+                    System.out.println("BoardDao update accept Error");
+                }
+            }
+        });
     }
 }
