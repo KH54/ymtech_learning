@@ -37,9 +37,7 @@ public class GenericDao<T, K> {
         List<T> result = new ArrayList<>();
 
         // DB 연결 및 쿼리 실행
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(sql); 
-                ResultSet rs = stmt.executeQuery();) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery();) {
 
             // table에 저장된 데이터 확인
             while (rs.next()) {
@@ -49,7 +47,7 @@ public class GenericDao<T, K> {
                 result.add(newInstance);
             }
         } catch (SQLException e) {
-            System.out.println("GenericDAO SelectAll Error");
+            System.out.println("GenericDAO selectAll Error");
         }
         return result;
     }
@@ -71,8 +69,7 @@ public class GenericDao<T, K> {
         T newInstance = null;
 
         // DB 연결 및 쿼리문 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(sql);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql);) {
 
             // 와일드 카드 입력
             stmt.setObject(1, pk);
@@ -103,9 +100,9 @@ public class GenericDao<T, K> {
      * @throws SQLException
      */
     public Integer insert(T vo, String sql, BiConsumer<PreparedStatement, T> stmtFunction) {
+
         // DB 연결 및 쿼리문 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(sql);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql);) {
 
             stmtFunction.accept(stmt, vo);
             // insert 결과 반환
@@ -120,7 +117,7 @@ public class GenericDao<T, K> {
      * User, Board, Comment의 update 메소드를 Generic Type으로 받아 처리
      *
      * @author "KyungHun Park"
-
+     * @since 2021. 9. 15. 오후 5:16:47
      *
      * @param vo : vo 객체
      * @param sql  : 쿼리문
@@ -131,8 +128,7 @@ public class GenericDao<T, K> {
     public Integer update(T vo, String sql, BiConsumer<PreparedStatement, T> stmtFunction) {
 
         // DB 연결 및 쿼리문 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
-                PreparedStatement stmt = con.prepareStatement(sql);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql);) {
 
             stmtFunction.accept(stmt, vo);
 
