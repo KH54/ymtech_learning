@@ -28,7 +28,7 @@ public class GenericDao<T, K> {
      * @since 2021. 9. 15. 오후 4:56:15
      *
      * @param sql             : 쿼리문
-     * @param convertFunction : 함수형 인터페이스
+     * @param convertFunction : ResultSet을 T로 변환
      * @return result : 결과를 리스트에 담아 반환
      * @throws SQLException
      */
@@ -37,7 +37,9 @@ public class GenericDao<T, K> {
         List<T> result = new ArrayList<>();
 
         // DB 연결 및 쿼리 실행
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery();) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
+                PreparedStatement stmt = con.prepareStatement(sql); 
+                ResultSet rs = stmt.executeQuery();) {
 
             // table에 저장된 데이터 확인
             while (rs.next()) {
@@ -60,7 +62,7 @@ public class GenericDao<T, K> {
      *
      * @param sql             : 쿼리문
      * @param pk              : 와일드카드에 입력할 PK
-     * @param convertFunction : 함수형 인터페이스
+     * @param convertFunction : ResultSet을 T로 변환
      * @return
      * @throws SQLException
      */
@@ -69,7 +71,8 @@ public class GenericDao<T, K> {
         T newInstance = null;
 
         // DB 연결 및 쿼리문 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
+                PreparedStatement stmt = con.prepareStatement(sql);) {
 
             // 와일드 카드 입력
             stmt.setObject(1, pk);
@@ -88,21 +91,23 @@ public class GenericDao<T, K> {
         return newInstance;
     }
 
+
     /**
      * User, Board, Comment의 insert 메소드를 Generic Type으로 받아 처리
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 15. 오후 5:16:36
+     * @since 2021. 9. 24. 오후 5:37:54
      *
+     * @param vo : vo 객체
      * @param sql  : 쿼리문
-     * @param list : 와일드카드에 입력할 PK와 추가할 정보
+     * @param stmtFunction : 두개의 인자를 받아 반환값이 없는 작업의 함수형 인터페이스
      * @return
-     * @throws SQLException
      */
     public Integer insert(T vo, String sql, BiConsumer<PreparedStatement, T> stmtFunction) {
 
         // DB 연결 및 쿼리문 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
+                PreparedStatement stmt = con.prepareStatement(sql);) {
 
             stmtFunction.accept(stmt, vo);
             // insert 결과 반환
@@ -117,18 +122,19 @@ public class GenericDao<T, K> {
      * User, Board, Comment의 update 메소드를 Generic Type으로 받아 처리
      *
      * @author "KyungHun Park"
-     * @since 2021. 9. 15. 오후 5:16:47
+     * @since 2021. 9. 24. 오후 5:16:47
      *
      * @param vo : vo 객체
      * @param sql  : 쿼리문
-     * @param stmtfunction : 
+     * @param stmtfunction : 두개의 인자를 받아 반환값이 없는 작업의 함수형 인터페이스
      * @return
      * @throws SQLException
      */
     public Integer update(T vo, String sql, BiConsumer<PreparedStatement, T> stmtFunction) {
 
         // DB 연결 및 쿼리문 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
+                PreparedStatement stmt = con.prepareStatement(sql);) {
 
             stmtFunction.accept(stmt, vo);
 
@@ -154,7 +160,8 @@ public class GenericDao<T, K> {
     public Integer delete(String sql, K pk) {
 
         // DB 연결 및 쿼리문 호출
-        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); PreparedStatement stmt = con.prepareStatement(sql);) {
+        try (Connection con = DriverManager.getConnection(DB.URL, DB.ID, DB.PWD); 
+                PreparedStatement stmt = con.prepareStatement(sql);) {
 
             // 매개변수로 받은 PK를 와일드카드에 입력
             stmt.setObject(1, pk);

@@ -1,6 +1,5 @@
 package com.ymtech.board.vo;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,7 +10,7 @@ import java.sql.SQLException;
  * @since 2021. 9. 9. 오전 8:55:19
  *
  */
-public class User implements BiConsumer<PreparedStatement, User>{
+public class User{
     // 유저 ID -- PK
     private String userId;
     // 유저 PW
