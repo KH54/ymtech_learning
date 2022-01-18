@@ -14,7 +14,7 @@ import java.sql.SQLException;
  *
  */
 public class DB {
-
+    
     // DB 연결 정보
     public static final String URL = "jdbc:mysql://127.0.0.1:3306/board";
     public static final String ID = "root";
