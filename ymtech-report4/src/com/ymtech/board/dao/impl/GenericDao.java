@@ -21,7 +21,7 @@ import java.util.function.Function;
  */
 public class GenericDao<T, K> {
 
-    /**
+    /**w
      * User, Board, Comment의 selectAll 메소드를 Generic Type으로 받아 처리
      *
      * @author "KyungHun Park"
@@ -90,7 +90,6 @@ public class GenericDao<T, K> {
         }
         return newInstance;
     }
-
 
     /**
      * User, Board, Comment의 insert 메소드를 Generic Type으로 받아 처리

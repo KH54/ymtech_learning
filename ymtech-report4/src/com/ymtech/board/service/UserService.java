@@ -57,8 +57,6 @@ public class UserService {
 
         User user2;
         user2 = userDao.select(user);
-        
-        
 
         return user2;
     }
