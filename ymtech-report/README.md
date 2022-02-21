@@ -1,7 +1,7 @@
 ## [List To Array, Array To List](https://github.com/KH54/ymtech_learning/blob/main/ymtech-report/src/com/ymtech/cast/Casting.java)
   Arrays.asList 및 반복문을 이용한 Array to List
   toArray 및 반복문을 이용한 List to Array
-<hr>
+<br>
 ## [SpringBoot와 MariaDB 연동](https://github.com/KH54/ymtech_learning/blob/main/ymtech-report/src/com/ymtech/crud/Crud.java)
   DB연동을 통한 ID, PW CRUD 기능 구현    
   
