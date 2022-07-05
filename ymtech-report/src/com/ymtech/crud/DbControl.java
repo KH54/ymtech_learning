@@ -172,12 +172,6 @@ public class DbControl {
                
                // rs가 위에서 한번 next() 되었기 때문에 제일 처음으로 돌려준다.
                rs.beforeFirst();
-
-               if (rs.next()) {
-                   /* table에 레코드가 저장되어있으면 실행 */
-                   
-                   // rs가 위에서 한번 next() 되었기 때문에 제일 처음으로 돌려준다.
-                   rs.beforeFirst();
                    
                    // TABLE에 저장된 id와 pw를 출력
                    while (rs.next()) {
