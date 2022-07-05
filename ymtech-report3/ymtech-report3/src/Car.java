@@ -1,5 +1,5 @@
 /**
- * Old ModelÀ» New Model·Î º¯È¯ ÈÄ Ãâ·Â
+ * Old Modelì„ New Modelë¡œ ë³€í™˜ í›„ ì¶œë ¥
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 6.
@@ -7,23 +7,22 @@
  */
 public class Car {
     public static void main(String[] args) {
-
-        // model °´Ã¼ »ı¼º
+        // model ê°ì²´ ìƒì„±
         OldModel om = new OldModel();
         NewModel nm = new NewModel();
-
-        // Old ModelÀÇ ÇÊµå Ãâ·Â
+        
+        // Old Modelì˜ í•„ë“œ ì¶œë ¥
         System.out.println(om.toString());
-
-        // New ModelÀÇ ÇÊµå Ãâ·Â
+        
+        // New Modelì˜ í•„ë“œ ì¶œë ¥
         System.out.println(nm.toString());
-
-        // Old Model¿¡ New Model º¯È¯
+        
+        // Old Modelì— New Model ë³€í™˜
         OldModel castOm = new OldModel(nm);
         NewModel castNm = new NewModel(om);
-        // º¯È¯ÇÑ om Ãâ·Â
+        
+        // ë³€í™˜í•œ om ì¶œë ¥
         System.out.println(castOm.toString());
         System.out.println(castNm.toString());
     }
-
 }

@@ -10,7 +10,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 /**
- *        ArrayList¿Í HashSetÀ¸·Î listÀÇ Áßº¹À» Á¦°ÅÇÏ´Â class
+ * ArrayListì™€ HashSetìœ¼ë¡œ listì˜ ì¤‘ë³µì„ ì œê±°í•˜ëŠ” class
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 3.
@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 public class Deduplicate {
 
     /**
-     *        Áßº¹Á¦°Å ÇÒ ¹æ¹ıÀ» ÇÏ´Â main ¸Ş¼Òµå
+     * ì¤‘ë³µì œê±° í•  ë°©ë²•ì„ í•˜ëŠ” main ë©”ì†Œë“œ
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
@@ -27,65 +27,63 @@ public class Deduplicate {
      */
     public static void main(String[] args) {
 
-        // log Ãâ·ÂÀ» À§ÇÑ logger »ı¼º
+        // log ì¶œë ¥ì„ ìœ„í•œ logger ìƒì„±
         Logger logger = Logger.getLogger(Deduplicate.class);
 
-        // Áßº¹ÀÌ Á¸ÀçÇÏ´Â list »ı¼º
+        // ì¤‘ë³µì´ ì¡´ì¬í•˜ëŠ” list ìƒì„±
         List<String> list = Arrays.asList("a", "e", "i", "i", "o", "u", "a", "e");
 
-        // Áßº¹ Á¦°Å ¹æ¹ıÀ» ÀÔ·Â¹Ş±â À§ÇÑ Scanner Å¬·¡½º
+        // ì¤‘ë³µ ì œê±° ë°©ë²•ì„ ì…ë ¥ë°›ê¸° ìœ„í•œ Scanner í´ë˜ìŠ¤
         Scanner controlDup = new Scanner(System.in);
 
-        int control = 0; // ÀÔ·Â¹ŞÀº controlDupÀ» ÀúÀåÇÏ±â À§ÇÑ º¯¼ö
+        int control = 0; // ì…ë ¥ë°›ì€ controlDupì„ ì €ì¥í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 
-        // ArrayList ¹æ¹ı°ú HashSet ¹æ¹ı Áß ¼±ÅÃ
+        // ArrayList ë°©ë²•ê³¼ HashSet ë°©ë²• ì¤‘ ì„ íƒ
         while (control != 4) {
-            System.out.println("Áßº¹ Á¦°ÅÇÒ ¹æ¹ıÀ» ¼±ÅÃÇÏ¼¼¿ä");
+            System.out.println("ì¤‘ë³µ ì œê±°í•  ë°©ë²•ì„ ì„ íƒí•˜ì„¸ìš”");
             System.out.println("1. ArrayList 2. HashSet 3. Stream 4. quit");
 
             try {
-                control = controlDup.nextInt(); // »ç¿ëÀÚ¿¡°Ô ÀÔ·Â¹ŞÀº °ªÀ» ÀúÀå
+                control = controlDup.nextInt(); // ì‚¬ìš©ìì—ê²Œ ì…ë ¥ë°›ì€ ê°’ì„ ì €ì¥
 
-            } catch (InputMismatchException ie) { // intÇü Å¸ÀÔÀÌ ¾Æ´Ñ °ªÀÌ ÀÔ·ÂµÇ¾úÀ» ¶§ ·Î±× Ãâ·Â ÈÄ ÀçÀÔ·Â ¿äÃ»
-                logger.info(ie + "\n¼ıÀÚ¸¸ ÀÔ·ÂÇÏ¼¼¿ä");
-                controlDup.nextLine(); // ÀÔ·Â¹ŞÀº °ªÀ» ÃÊ±âÈ­
-                continue; // ÀçÀÔ·Â ¿äÃ»
+            } catch (InputMismatchException ie) { // intí˜• íƒ€ì…ì´ ì•„ë‹Œ ê°’ì´ ì…ë ¥ë˜ì—ˆì„ ë•Œ ë¡œê·¸ ì¶œë ¥ í›„ ì¬ì…ë ¥ ìš”ì²­
+                logger.info(ie + "\nìˆ«ìë§Œ ì…ë ¥í•˜ì„¸ìš”");
+                controlDup.nextLine(); // ì…ë ¥ë°›ì€ ê°’ì„ ì´ˆê¸°í™”
+                continue; // ì¬ì…ë ¥ ìš”ì²­
 
-            } catch (Exception e) { // ÀÌ½´·Î ÀÎÇÑ ¿¹¿Ü ¹ß»ı½Ã ·Î±×¸¦ Ãâ·ÂÇÑ µÚ Á¾·á
+            } catch (Exception e) { // ì´ìŠˆë¡œ ì¸í•œ ì˜ˆì™¸ ë°œìƒì‹œ ë¡œê·¸ë¥¼ ì¶œë ¥í•œ ë’¤ ì¢…ë£Œ
                 logger.error(e + "\nSystem exit");
-                controlDup.close(); // scanner Á¾·á
-                System.exit(0); // ½Ã½ºÅÛ Á¾·á
+                controlDup.close(); // scanner ì¢…ë£Œ
+                System.exit(0); // ì‹œìŠ¤í…œ ì¢…ë£Œ
             }
 
-            // switch case¸¦ ÀÌ¿ëÇÏ¿© ÀÔ·Â¹ŞÀº °ª¿¡ µû¶ó ÇØ´çÇÏ´Â ¸Ş¼Òµå È£Ãâ
+            // switch caseë¥¼ ì´ìš©í•˜ì—¬ ì…ë ¥ë°›ì€ ê°’ì— ë”°ë¼ í•´ë‹¹í•˜ëŠ” ë©”ì†Œë“œ í˜¸ì¶œ
             switch (control) {
-
-            case 1: // ArrayList¸¦ »ç¿ëÇÑ ¹æ¹ı
+            case 1: // ArrayListë¥¼ ì‚¬ìš©í•œ ë°©ë²•
                 useArrList(list);
                 break;
 
-            case 2: // HashSetÀ» »ç¿ëÇÑ ¹æ¹ı
+            case 2: // HashSetì„ ì‚¬ìš©í•œ ë°©ë²•
                 useHashSet(list);
                 break;
 
-            case 3: // StreamÀ» »ç¿ëÇÑ ¹æ¹ı
+            case 3: // Streamì„ ì‚¬ìš©í•œ ë°©ë²•
                 useStream(list);
                 break;
 
-            case 4: // ½Ã½ºÅÛ Á¾·á
+            case 4: // ì‹œìŠ¤í…œ ì¢…ë£Œ
                 System.out.println("System exit");
-                controlDup.close(); // scanner Á¾·á
+                controlDup.close(); // scanner ì¢…ë£Œ
                 System.exit(0);
 
-            default: // 1~4ÀÇ ¼ıÀÚ°¡ ¾Æ´Ñ ´Ù¸¥ ¼ıÀÚ¸¦ ÀÔ·ÂÇÑ °æ¿ì
-                System.out.println("¼±ÅÃÁö¿¡ ÀÖ´Â ¼ıÀÚ¸¸ ÀÔ·ÂÇÏ¼¼¿ä");
+            default: // 1~4ì˜ ìˆ«ìê°€ ì•„ë‹Œ ë‹¤ë¥¸ ìˆ«ìë¥¼ ì…ë ¥í•œ ê²½ìš°
+                System.out.println("ì„ íƒì§€ì— ìˆëŠ” ìˆ«ìë§Œ ì…ë ¥í•˜ì„¸ìš”");
             }
         }
-
     }
 
     /**
-     *             ArrayList¸¦ ÀÌ¿ëÇÑ Áßº¹Á¦°Å
+     * ArrayListë¥¼ ì´ìš©í•œ ì¤‘ë³µì œê±°
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
@@ -94,22 +92,22 @@ public class Deduplicate {
      * 
      */
     public static void useArrList(List<String> list) {
-        // Áßº¹À» Á¦°ÅÇÑ list¸¦ ´ãÀ» list »ı¼º
+        // ì¤‘ë³µì„ ì œê±°í•œ listë¥¼ ë‹´ì„ list ìƒì„±
         List<String> arrayList = new ArrayList<>();
 
-        // for each¸¦ »ç¿ëÇÏ¿© listÀÇ ¿ä¼Ò¸¦ data¿¡ ÀÔ·Â
+        // for eachë¥¼ ì‚¬ìš©í•˜ì—¬ listì˜ ìš”ì†Œë¥¼ dataì— ì…ë ¥
         for (String data : list) {
-            if (!arrayList.contains(data)) { // Contains·Î ÀÔ·ÂÇÏ·Á´Â °ªÀÌ ÀÖ´ÂÁö È®ÀÎ ÈÄ list¿¡ Ãß°¡
+            if (!arrayList.contains(data)) { // Containsë¡œ ì…ë ¥í•˜ë ¤ëŠ” ê°’ì´ ìˆëŠ”ì§€ í™•ì¸ í›„ listì— ì¶”ê°€
                 arrayList.add(data);
             }
         }
 
-        // Áßº¹À» Á¦°ÅÇÑ µÚ ¸®½ºÆ® Ãâ·Â
+        // ì¤‘ë³µì„ ì œê±°í•œ ë’¤ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
         System.out.printf("ArrayList result : %s \n", arrayList);
     }
 
     /**
-     *             SetÀ» ÀÌ¿ëÇÑ Áßº¹ Á¦°Å
+     * Setì„ ì´ìš©í•œ ì¤‘ë³µ ì œê±°
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
@@ -118,20 +116,19 @@ public class Deduplicate {
      * 
      */
     public static void useHashSet(List<String> list) {
-        // Áßº¹À» Á¦°ÅÇÑ SetÀ» ´ãÀ» Set »ı¼º
+        // ì¤‘ë³µì„ ì œê±°í•œ Setì„ ë‹´ì„ Set ìƒì„±
         HashSet<String> hashSet = new HashSet<>();
-
-        // for each¸¦ »ç¿ëÇÏ¿© listÀÇ ¿ä¼Ò¸¦ data¿¡ ÀÔ·Â
+        
+        // for eachë¥¼ ì‚¬ìš©í•˜ì—¬ listì˜ ìš”ì†Œë¥¼ dataì— ì…ë ¥
         for (String data : list) {
-            hashSet.add(data); // SetÀº Áßº¹À» Çã¿ëÇÏÁö ¾Ê±â ¶§¹®¿¡ ¼ø¼­´ë·Î ÀÔ·Â
+            hashSet.add(data); // Setì€ ì¤‘ë³µì„ í—ˆìš©í•˜ì§€ ì•Šê¸° ë•Œë¬¸ì— ìˆœì„œëŒ€ë¡œ ì…ë ¥
         }
-
-        // Áßº¹À» Á¦°ÅÇÑ µÚ Set Ãâ·Â
+        // ì¤‘ë³µì„ ì œê±°í•œ ë’¤ Set ì¶œë ¥
         System.out.printf("HashSet result : %s \n", hashSet);
     }
 
     /**
-     *             StreamÀ» ÀÌ¿ëÇÑ Áßº¹ Á¦°Å
+     * Streamì„ ì´ìš©í•œ ì¤‘ë³µ ì œê±°
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
@@ -140,7 +137,7 @@ public class Deduplicate {
      * 
      */
     public static void useStream(List<String> list) {
-        // StreamÀÇ distinct¸¦ »ç¿ëÇÑ Áßº¹Á¦°Å
+        // Streamì˜ distinctë¥¼ ì‚¬ìš©í•œ ì¤‘ë³µì œê±°
         list.stream().distinct().forEach(System.out::print);
     }
 }

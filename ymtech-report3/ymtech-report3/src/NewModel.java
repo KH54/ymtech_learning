@@ -1,27 +1,25 @@
 import java.util.Arrays;
 
 /**
- * Old Model°ú field°¡ µ¿ÀÏÇÑ New Model
+ * Old Modelê³¼ fieldê°€ ë™ì¼í•œ New Model
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 6.
  *
  */
 public class NewModel {
-
-    // field º¯¼ö ¼±¾ğ
-    private int headCount; // º¯¼öÀÌ¸§ º¯°æ
+    // field ë³€ìˆ˜ ì„ ì–¸
+    private int headCount; // ë³€ìˆ˜ì´ë¦„ ë³€ê²½
     private String driver;
     private double gasMileage;
     private boolean power;
     private String[] peopleName;
 
-    // ±âº» »ı¼ºÀÚ
+    // ê¸°ë³¸ ìƒì„±ì
     public NewModel() {
-
     }
-    
-    // omÀÇ ÇÊµå¸¦ ÀÔ·ÂÇÏ´Â »ı¼ºÀÚ
+
+    // omì˜ í•„ë“œë¥¼ ì…ë ¥í•˜ëŠ” ìƒì„±ì
     public NewModel(OldModel om) {
         this.headCount = om.getHeadCount();
         this.driver = om.getDriver();
@@ -30,57 +28,57 @@ public class NewModel {
         this.peopleName = om.getPeopleName();
     }
 
-    // »ç¶÷ÀÇ ¼ö¸¦ get
+    // ì‚¬ëŒì˜ ìˆ˜ë¥¼ get
     public int getHeadCount() {
         return headCount;
     }
-    
-    // »ç¶÷ÀÇ ¼ö¸¦ set
+
+    // ì‚¬ëŒì˜ ìˆ˜ë¥¼ set
     public void setHeadCount(int people) {
         this.headCount = people;
     }
 
-    // µå¶óÀÌ¹öÀÇ ÀÌ¸§À» get
+    // ë“œë¼ì´ë²„ì˜ ì´ë¦„ì„ get
     public String getDriver() {
         return driver;
     }
-    
-    // µå¶óÀÌ¹öÀÇ ÀÌ¸§À» set
+
+    // ë“œë¼ì´ë²„ì˜ ì´ë¦„ì„ set
     public void setDriver(String driver) {
         this.driver = driver;
     }
 
-    // ¿¬ºñ¸¦ get
+    // ì—°ë¹„ë¥¼ get
     public double getGasMileage() {
         return gasMileage;
     }
 
-    // ¿¬ºñ¸¦ set
+    // ì—°ë¹„ë¥¼ set
     public void setGasMileage(double gasMileage) {
         this.gasMileage = gasMileage;
     }
 
-    // ½Ãµ¿ »óÅÂ¸¦ get
+    // ì‹œë™ ìƒíƒœë¥¼ get
     public boolean isPower() {
         return power;
     }
 
-    // ½Ãµ¿ »óÅÂ¸¦ set
+    // ì‹œë™ ìƒíƒœë¥¼ set
     public void setPower(boolean power) {
         this.power = power;
     }
 
-    // Å¾½ÂÇÑ »ç¶÷ÀÇ ÀÌ¸§À» get
+    // íƒ‘ìŠ¹í•œ ì‚¬ëŒì˜ ì´ë¦„ì„ get
     public String[] getPeopleName() {
         return peopleName;
     }
 
-    // Å¾½ÂÇÑ »ç¶÷ÀÇ ÀÌ¸§À» set
+    // íƒ‘ìŠ¹í•œ ì‚¬ëŒì˜ ì´ë¦„ì„ set
     public void setPeopleName(String[] arr) {
-        this.peopleName = arr; 
+        this.peopleName = arr;
     }
- 
-    // ¸ğµç field¸¦ Ãâ·Â
+
+    // ëª¨ë“  fieldë¥¼ ì¶œë ¥
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -97,5 +95,4 @@ public class NewModel {
         builder.append("]");
         return builder.toString();
     }
-    
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *        List¸¦ Array·Î Array¸¦ List·Î º¯È¯ÇÏ´Â class
+ * Listë¥¼ Arrayë¡œ Arrayë¥¼ Listë¡œ ë³€í™˜í•˜ëŠ” class
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 3.
@@ -12,65 +12,54 @@ import java.util.List;
  */
 public class Casting {
     public static void main(String[] args) {
-        
-        // º¯È¯ÇÒ list, array »ı¼º
+
+        // ë³€í™˜í•  list, array ìƒì„±
         List<String> list = Arrays.asList("a", "b", "c");
         String[] array = { "1", "2", "3" };
-
-        // Ã³À½ °ª
+        // ì²˜ìŒ ê°’
         System.out.println(list);
-        System.out.printf("%s \n\n",Arrays.toString(array));
-
-        // ¹Ù²ï °ª
+        System.out.printf("%s \n\n", Arrays.toString(array));
+        // ë°”ë€ ê°’
         System.out.println(changeArr(array, list));
-        System.out.printf("%s \n\n",Arrays.toString(changeList(list, array)));
-        
-        
+        System.out.printf("%s \n\n", Arrays.toString(changeList(list, array)));
+
     }
-    
+
     /**
-     *         array¸¦ list·Î º¯°æ
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
-     * @param array º¯°æÇÒ array
-     * @param ltis  array¸¦ ´ãÀ» list
-     * 
-     * @return º¯°æÇÑ list ¹İÈ¯
-     * 
-     */
-    public static List<String> changeArr(String[] array, List<String> list) {
-        list = Arrays.asList(array); // Arrays Å¬·¡½ºÀÇ asList ¸Ş¼Òµå¸¦ ÀÌ¿ëÇÑ º¯È¯
+     * @param array ë³€ê²½í•  array*
+     * @param ltis  arrayë¥¼ ë‹´ì„ list
+     * @return ë³€ê²½í•œ list ë°˜í™˜
+     **/
 
+    public static List<String> changeArr(String[] array, List<String> list) {
+        list = Arrays.asList(array); // Arrays í´ë˜ìŠ¤ì˜ asList ë©”ì†Œë“œë¥¼ ì´ìš©í•œ ë³€í™˜
         /*
-         * for(String change : array) 
-         * { list.add(change); } 
-         *  ¹İº¹¹®À» ÀÌ¿ëÇÑ º¯È¯
+         * for(String change : array) { list.add(change); } ë°˜ë³µë¬¸ì„ ì´ìš©í•œ ë³€í™˜
          */
         return list;
     }
 
     /**
-     *         list¸¦ array·Î º¯°æ
+     * listë¥¼ arrayë¡œ ë³€ê²½
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
-     * @param list  º¯°æÇÒ list
-     * @param array list¸¦ ´ãÀ» array
+     * @param list  ë³€ê²½í•  list
+     * @param array listë¥¼ ë‹´ì„ array
      * 
-     * @return º¯°æÇÑ array ¹İÈ¯
+     * @return ë³€ê²½í•œ array ë°˜í™˜
      * 
      */
     public static String[] changeList(List<String> list, String[] array) {
-        array = list.toArray(new String[list.size()]); // toArray ¸Ş¼Òµå¸¦ ÀÌ¿ëÇÑ º¯È¯
-
+        array = list.toArray(new String[list.size()]); // toArray ë©”ì†Œë“œë¥¼ ì´ìš©í•œ ë³€í™˜
         /*
-         * int order =0; 
-         * for(String change : list) 
-         * { array[order++] += change; } 
-         *  ¹İº¹¹®À» ÀÌ¿ëÇÑ º¯È¯
+         * int order =0; for(String change : list) { array[order++] += change; } ë°˜ë³µë¬¸ì„
+         * ì´ìš©í•œ ë³€í™˜
          */
         return array;
     }

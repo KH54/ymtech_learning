@@ -5,7 +5,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 /**
- *        DBÀÇ 'info' TABLE¿¡ Á¢±ÙÇÏ¿© »ç¿ëÀÚ¿¡°Ô ÀÔ·Â ¹ŞÀº °ªÀ¸·Î CRUD ¼öÇà
+ * DBì˜ 'info' TABLEì— ì ‘ê·¼í•˜ì—¬ ì‚¬ìš©ìì—ê²Œ ì…ë ¥ ë°›ì€ ê°’ìœ¼ë¡œ CRUD ìˆ˜í–‰
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 03.
@@ -13,70 +13,65 @@ import org.apache.log4j.Logger;
  */
 public class Crud {
     public static void main(String[] args) {
-
-        // DbControl Class ÀÎ½ºÅÏ½º »ı¼º
+        // DbControl Class ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
         DbControl dc = new DbControl();
 
-        // log Ãâ·ÂÀ» À§ÇÑ logger »ı¼º
+        // log ì¶œë ¥ì„ ìœ„í•œ logger ìƒì„±
         Logger logger = Logger.getLogger(Crud.class);
 
-        // »ç¿ëÀÚ¿¡°Ô ÀÔ·ÂÀ» ¹Ş±â À§ÇÑ Scanner Class ÀÎ½ºÅÏ½º »ı¼º
+        // ì‚¬ìš©ìì—ê²Œ ì…ë ¥ì„ ë°›ê¸° ìœ„í•œ Scanner Class ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
         Scanner controlCRUD = new Scanner(System.in);
 
-        // ÀÛ¾÷À» ¼öÇàÇÏ±â À§ÇØ »ç¿ëÀÚ¿¡°Ô ÀÔ·Â ¹ŞÀº ¼ö¸¦ ÀúÀåÇÏ´Â º¯¼ö
+        // ì‘ì—…ì„ ìˆ˜í–‰í•˜ê¸° ìœ„í•´ ì‚¬ìš©ìì—ê²Œ ì…ë ¥ ë°›ì€ ìˆ˜ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
         int control = 0;
 
-        // break±îÁö °è¼Ó ¼öÁ¤ÀÌ °¡´ÉÇÏµµ·Ï While¹® »ç¿ë
+        // breakê¹Œì§€ ê³„ì† ìˆ˜ì •ì´ ê°€ëŠ¥í•˜ë„ë¡ Whileë¬¸ ì‚¬ìš©
         while (true) {
-
             try {
-                // ¼öÇàÇÒ CRUD ¼±ÅÃ
-                System.out.println("TABLE¿¡¼­ ¼öÇàÇÒ ÀÛ¾÷À» °í¸£¼¼¿ä");
+                // ìˆ˜í–‰í•  CRUD ì„ íƒ
+                System.out.println("TABLEì—ì„œ ìˆ˜í–‰í•  ì‘ì—…ì„ ê³ ë¥´ì„¸ìš”");
                 System.out.println("1 : insert, 2 : delete, 3 : update, 4 : read, 5 : quit");
 
-                // »ç¿ëÀÚ¿¡°Ô ÀÛ¾÷À» ÀÔ·Â¹ŞÀ½
+                // ì‚¬ìš©ìì—ê²Œ ì‘ì—…ì„ ì…ë ¥ë°›ìŒ
                 control = controlCRUD.nextInt();
+            } catch (InputMismatchException ie) { // intí˜• íƒ€ì…ì´ ì•„ë‹Œ ê°’ì´ ì…ë ¥ë˜ì—ˆì„ ë•Œ ë¡œê·¸ë¥¼ ì¶œë ¥í•œ í›„ ì¬ì…ë ¥ ìš”ì²­
 
-            } catch (InputMismatchException ie) { // intÇü Å¸ÀÔÀÌ ¾Æ´Ñ °ªÀÌ ÀÔ·ÂµÇ¾úÀ» ¶§ ·Î±×¸¦ Ãâ·ÂÇÑ ÈÄ ÀçÀÔ·Â ¿äÃ»
-
-                // enter¸¦ ±âÁØÀ¸·Î °ªÀ» ¸®ÅÏÇÏ´Â nextLine() ¸Ş¼Òµå. ÀÔ·ÂµÈ °ªÀ» ÃÊ±âÈ­ ½ÃÄÑÁØ´Ù.
+                // enterë¥¼ ê¸°ì¤€ìœ¼ë¡œ ê°’ì„ ë¦¬í„´í•˜ëŠ” nextLine() ë©”ì†Œë“œ. ì…ë ¥ëœ ê°’ì„ ì´ˆê¸°í™” ì‹œì¼œì¤€ë‹¤.
                 controlCRUD.nextLine();
-                logger.info("\n ¼ıÀÚ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä") ;
-                continue; // ÀçÀÔ·Â ¿äÃ»
-
-            } catch (Exception e) { // ·Î±×¸¦ Ãâ·ÂÇÏ°í ½Ã½ºÅÛ Á¾·á
-                logger.error("\n ½Ã½ºÅÛ Á¾·á", e);
+                logger.info("\n ìˆ«ìë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”");
+                continue; // ì¬ì…ë ¥ ìš”ì²­
+            } catch (Exception e) { // ë¡œê·¸ë¥¼ ì¶œë ¥í•˜ê³  ì‹œìŠ¤í…œ ì¢…ë£Œ
+                logger.error("\n ì‹œìŠ¤í…œ ì¢…ë£Œ", e);
                 System.exit(0);
             }
-
-            /* »ç¿ëÀÚÀÇ ÀÔ·Â¿¡ µû¸¥ ¸Ş¼Òµå È£Ãâ */
+            /* ì‚¬ìš©ìì˜ ì…ë ¥ì— ë”°ë¥¸ ë©”ì†Œë“œ í˜¸ì¶œ */
             switch (control) {
-            case 1: // Ãß°¡
+            case 1: // ì¶”ê°€
                 dc.insert();
                 break;
 
-            case 2: // »èÁ¦
+            case 2: // ì‚­ì œ
                 dc.delete();
                 break;
 
-            case 3: // º¯°æ
+            case 3: // ë³€ê²½
                 dc.update();
                 break;
 
-            case 4: // ÀĞ±â
+            case 4: // ì½ê¸°
                 dc.read();
                 break;
 
-            case 5: // ½Ã½ºÅÛ Á¾·á
-                System.out.println("½Ã½ºÅÛ Á¾·á");
-                controlCRUD.close(); // scanner Á¾·á
+            case 5: // ì‹œìŠ¤í…œ ì¢…ë£Œ
+                System.out.println("ì‹œìŠ¤í…œ ì¢…ë£Œ");
+                controlCRUD.close(); // scanner ì¢…ë£Œ
                 System.exit(0);
 
-            default: // 1~5°¡ ¾Æ´Ñ ´Ù¸¥ ¼ıÀÚ¸¦ ÀÔ·ÂÇÑ °æ¿ì
-                System.out.println("¼±ÅÃÁö¿¡ ÀÖ´Â ¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä");
+            default: // 1~5ê°€ ì•„ë‹Œ ë‹¤ë¥¸ ìˆ«ìë¥¼ ì…ë ¥í•œ ê²½ìš°
+                System.out.println("ì„ íƒì§€ì— ìˆëŠ” ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”");
                 break;
             }
-            controlCRUD.nextLine(); // ÀÔ·Â¹Ş¾Ò´ø ³»¿ë ÃÊ±âÈ­
+            controlCRUD.nextLine(); // ì…ë ¥ë°›ì•˜ë˜ ë‚´ìš© ì´ˆê¸°í™”
         }
 
     }

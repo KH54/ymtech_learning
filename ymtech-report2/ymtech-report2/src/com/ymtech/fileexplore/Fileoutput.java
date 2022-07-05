@@ -1,19 +1,21 @@
 package com.ymtech.fileexplore;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- *        µğ·ºÅä¸®ÀÇ ¸ğµç ÇÏÀ§ µğ·ºÅä¸®¿Í ÆÄÀÏÀ» Ãâ·ÂÇÏ´Â Å¬·¡½º
+ * ë””ë ‰í† ë¦¬ì˜ ëª¨ë“  í•˜ìœ„ ë””ë ‰í† ë¦¬ì™€ íŒŒì¼ì„ ì¶œë ¥í•˜ëŠ” í´ë˜ìŠ¤
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 3.
  *
  */
 public class Fileoutput {
+
     /**
-     *             µğ·ºÅä¸® °æ·Î ¼³Á¤°ú µğ·ºÅä¸® ³»ºÎ ¸ñ·ÏÀ» ÀúÀåÇÏ´Â files »ı¼º
+     * ë””ë ‰í† ë¦¬ ê²½ë¡œ ì„¤ì •ê³¼ ë””ë ‰í† ë¦¬ ë‚´ë¶€ ëª©ë¡ì„ ì €ì¥í•˜ëŠ” files ìƒì„±
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
@@ -23,78 +25,74 @@ public class Fileoutput {
      */
     public static void main(String[] args) {
 
-        // NioDirectory Å¬·¡½º ÀÎ½ºÅÏ½º »ı¼º
+        // NioDirectory í´ë˜ìŠ¤ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
         NioDirectory nio = new NioDirectory();
 
-        // Å½»öÇÒ µğ·ºÅä¸® °æ·Î ¼³Á¤
-        final String filePath = "C:\\Users\\user\\Desktop\\ÀÏÇĞ½Àº´ÇàÁ¦\\NCS\\»õ Æú´õ"; //
-
+        // íƒìƒ‰í•  ë””ë ‰í† ë¦¬ ê²½ë¡œ ì„¤ì •
+        final String filePath = "C:\\Users\\user\\Desktop\\ì¼í•™ìŠµë³‘í–‰ì œ\\NCS\\ìƒˆ í´ë”"; //
         try {
-            // ÇØ´ç °æ·Î¸¦ °¡Áø file , path °´Ã¼ »ı¼º
+            // í•´ë‹¹ ê²½ë¡œë¥¼ ê°€ì§„ file , path ê°ì²´ ìƒì„±
             File file = new File(filePath);
             Path path = Paths.get(filePath);
 
-            // µğ·ºÅä¸®ÀÇ ÆÄÀÏ¸ñ·ÏÀ» files ¹è¿­·Î ¹İÈ¯
+            // ë””ë ‰í† ë¦¬ì˜ íŒŒì¼ëª©ë¡ì„ files ë°°ì—´ë¡œ ë°˜í™˜
             File[] files = file.listFiles();
 
-            // µğ·ºÅä¸®ÀÇ ³»ºÎ°¡ ºñ¾îÀÖÁö ¾ÊÀ» °æ¿ì
+            // ë””ë ‰í† ë¦¬ì˜ ë‚´ë¶€ê°€ ë¹„ì–´ìˆì§€ ì•Šì„ ê²½ìš°
             if (files.length != 0) {
 
-                // ÇöÀç µğ·ºÅä¸® ¸í
+                // í˜„ì¬ ë””ë ‰í† ë¦¬ ëª…
                 System.out.printf("Current directory name : %s \n", file.getName());
 
-                // ÇöÀç¿Í ÇÏÀ§ µğ·ºÅä¸®ÀÇ ÆÄÀÏ ¹× µğ·ºÅä¸® ¸ñ·ÏÀ» ReadÇÏ´Â Method È£Ãâ
+                // í˜„ì¬ì™€ í•˜ìœ„ ë””ë ‰í† ë¦¬ì˜ íŒŒì¼ ë° ë””ë ‰í† ë¦¬ ëª©ë¡ì„ Readí•˜ëŠ” Method í˜¸ì¶œ
                 findLowDirectory(files);
-
                 try {
-                    //
                     Files.walkFileTree(path, nio);
                 } catch (Exception e) {
                     System.out.println("walkFileTree Error");
                 }
-
-            } else { // µğ·ºÅä¸®°¡ ºñ¾îÀÖÀ» °æ¿ì
-                System.out.println("ÇØ´ç °æ·Î¿¡´Â ÇÏÀ§ µğ·ºÅä¸® ¹× ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.");
+            } else { // ë””ë ‰í† ë¦¬ê°€ ë¹„ì–´ìˆì„ ê²½ìš°
+                System.out.println("í•´ë‹¹ ê²½ë¡œì—ëŠ” í•˜ìœ„ ë””ë ‰í† ë¦¬ ë° íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤.");
             }
-        } catch (NullPointerException e) { // µğ·ºÅä¸®¸íÀÌ Àß¸øµÇ¾úÀ» °æ¿ì
-            System.out.println("ERROR : ¼±ÅÃµÈ °æ·Î°¡ µğ·ºÅä¸®°¡ ¾Æ´Ï°Å³ª Àß¸øµÈ °æ·ÎÀÔ´Ï´Ù.");
+        } catch (NullPointerException e) { // ë””ë ‰í† ë¦¬ëª…ì´ ì˜ëª»ë˜ì—ˆì„ ê²½ìš°
+            System.out.println("ERROR : ì„ íƒëœ ê²½ë¡œê°€ ë””ë ‰í† ë¦¬ê°€ ì•„ë‹ˆê±°ë‚˜ ì˜ëª»ëœ ê²½ë¡œì…ë‹ˆë‹¤.");
         }
     }
 
     /**
-     *              ÇöÀç¿Í ÇÏÀ§ µğ·ºÅä¸®µéÀÌ °¡Áø ¸ñ·ÏÀ» Ãâ·ÂÇÏ´Â ¸Ş¼Òµå
+     * í˜„ì¬ì™€ í•˜ìœ„ ë””ë ‰í† ë¦¬ë“¤ì´ ê°€ì§„ ëª©ë¡ì„ ì¶œë ¥í•˜ëŠ” ë©”ì†Œë“œ
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
      *
-     * @param files // File ¹è¿­·Î ¹İÈ¯ÇÑ µğ·ºÅä¸® ¹× ÆÄÀÏ ¸ñ·Ï files
+     * @param files // File ë°°ì—´ë¡œ ë°˜í™˜í•œ ë””ë ‰í† ë¦¬ ë° íŒŒì¼ ëª©ë¡ files
      * 
      */
     static void findLowDirectory(File[] files) {
-        StringBuffer fileName = new StringBuffer(); // ¸ñ·ÏÀÇ ¿ä¼Ò¸¦ ÀúÀåÇÏ±â À§ÇÑ String º¯¼ö
+        StringBuffer fileName = new StringBuffer(); // ëª©ë¡ì˜ ìš”ì†Œë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ String ë³€ìˆ˜
         for (int row = 0; row < files.length; row++) {
-
-            // ¸ñ·ÏÀÇ ÀÌ¸§À» ÀúÀå
+            
+            // ëª©ë¡ì˜ ì´ë¦„ì„ ì €ì¥
             fileName = fileName.append(files[row].getName());
-
-            // ¼±ÅÃµÈ ¸ñ·ÏÀÌ µğ·ºÅä¸®ÀÎ °æ¿ì
+            
+            // ì„ íƒëœ ëª©ë¡ì´ ë””ë ‰í† ë¦¬ì¸ ê²½ìš°
             if (files[row].isDirectory()) {
-
-                // µğ·ºÅä¸®ÀÏ °æ¿ì µğ·ºÅä¸®¸í Ãâ·Â
-                System.out.printf("Directory name [ %s ] ¤Ñ¤Ñ¤Ñ¤Ñ\n", fileName);
-
-                // ÇÏÀ§ µğ·ºÅä¸®·Î ÁøÀÔÇÏ±â À§ÇØ Àç±Í
+                
+                // ë””ë ‰í† ë¦¬ì¼ ê²½ìš° ë””ë ‰í† ë¦¬ëª… ì¶œë ¥
+                System.out.printf("Directory name [ %s ] ã…¡ã…¡ã…¡ã…¡\n", fileName);
+                
+                // í•˜ìœ„ ë””ë ‰í† ë¦¬ë¡œ ì§„ì…í•˜ê¸° ìœ„í•´ ì¬ê·€
                 findLowDirectory(files[row].listFiles());
-            } else { // ¼±ÅÃµÈ ¸ñ·ÏÀÌ ÆÄÀÏÀÏ °æ¿ì
-
+                
+            } else { // ì„ íƒëœ ëª©ë¡ì´ íŒŒì¼ì¼ ê²½ìš°
                 System.out.printf("\t %s \n", fileName);
-
-                // µğ·ºÅä¸® ³»ÀÇ ¸ğµç ÆÄÀÏÀÇ ¼øÈ¸°¡ ³¡³µÀ» °æ¿ì
+                
+                // ë””ë ‰í† ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ì˜ ìˆœíšŒê°€ ëë‚¬ì„ ê²½ìš°
                 if (row == files.length - 1) {
-                    System.out.println("¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ \n");
+                    System.out.println("ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ \n");
                 }
             }
-            // ÀÔ·ÂµÈ ¸ñ·ÏÀÌ Áßº¹À¸·Î Ãâ·ÂµÇ´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇØ delete ¸Ş¼Òµå¸¦ »ç¿ëÇÏ¿© fileNameÀ» ÃÊ±âÈ­
+            // ì…ë ¥ëœ ëª©ë¡ì´ ì¤‘ë³µìœ¼ë¡œ ì¶œë ¥ë˜ëŠ” ê²ƒì„ ë°©ì§€í•˜ê¸° ìœ„í•´ delete ë©”ì†Œë“œë¥¼ ì‚¬ìš©í•˜ì—¬ fileNameì„ ì´ˆê¸°í™”
             fileName = fileName.delete(0, fileName.length());
         }
     }
