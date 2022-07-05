@@ -10,220 +10,206 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 /**
- *        Å×ÀÌºí¿¡ Á÷Á¢ÀûÀ¸·Î CRUDÇÏ´Â Class
+ * í…Œì´ë¸”ì— ì§ì ‘ì ìœ¼ë¡œ CRUDí•˜ëŠ” Class
  * 
  * @author "KyungHun Park"
  * @since 2021. 9. 3.
- *
  */
 public class DbControl {
-
-    // log Ãâ·ÂÀ» À§ÇÑ logger »ı¼º
+    // log ì¶œë ¥ì„ ìœ„í•œ logger ìƒì„±
     private static Logger logger = Logger.getLogger(DbControl.class);
 
-    // DB ¿¬°áÀ» À§ÇÑ ÁÖ¼Ò, ID, PW, Driver À§Ä¡, ¿ÜºÎ¿¡¼­ Á¢±ÙÇÒ ¼ö ¾ø°Ô private, º¯°æÇÒ ¼ö ¾ø°Ô final·Î ¼³Á¤
+    // DB ì—°ê²°ì„ ìœ„í•œ ì£¼ì†Œ, ID, PW, Driver ìœ„ì¹˜, ì™¸ë¶€ì—ì„œ ì ‘ê·¼í•  ìˆ˜ ì—†ê²Œ private, ë³€ê²½í•  ìˆ˜ ì—†ê²Œ finalë¡œ ì„¤ì •
     private final static String DB_URL = "jdbc:mysql://127.0.0.1:3306/ymtechfirst";
     private final static String DB_ID = "root";
     private final static String DB_PW = "eownddlf1704!";
     private final static String DB_DRIVER = "org.mariadb.jdbc.Driver";
 
-    // »ç¿ëÀÚ ÀÔ·ÂÀ» ¹Ş±â À§ÇÑ Scanner, ÀÔ·Â°ªÀ» ÀúÀåÇÏ±â À§ÇÑ ID, PW, ¿ÜºÎ¿¡¼­ Á¢±ÙÇÒ ¼ö ¾ø°Ô private
+    // ì‚¬ìš©ì ì…ë ¥ì„ ë°›ê¸° ìœ„í•œ Scanner, ì…ë ¥ê°’ì„ ì €ì¥í•˜ê¸° ìœ„í•œ ID, PW, ì™¸ë¶€ì—ì„œ ì ‘ê·¼í•  ìˆ˜ ì—†ê²Œ private
     private static String id;
     private static String password;
     private static Scanner inputInfo = new Scanner(System.in);
 
     /**
-     *        TABLE¿¡ ID¿Í PW ÀúÀå
+     * TABLEì— IDì™€ PW ì €ì¥
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
-     *
      */
     public void insert() {
-
-        // Driver ·Îµå
+        // Driver ë¡œë“œ
         loadDriver();
 
-        // DB ¿¬°á Á¤º¸, SQL¹®À» Àü¼ÛÇÒ °´Ã¼
-        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("INSERT INTO info(id, password) VALUES(?,?)");) 
-        {
+        // DB ì—°ê²° ì •ë³´, SQLë¬¸ì„ ì „ì†¡í•  ê°ì²´
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("INSERT INTO info(id, password) VALUES(?,?)");) {
 
-            // »ç¿ëÀÚ¿¡°Ô Ãß°¡ÇÒ ID¿Í PW ÀÔ·Â ¹ŞÀ½
-            System.out.print("Ãß°¡ÇÒ ID ÀÔ·Â : ");
+            // ì‚¬ìš©ìì—ê²Œ ì¶”ê°€í•  IDì™€ PW ì…ë ¥ ë°›ìŒ
+            System.out.print("ì¶”ê°€í•  ID ì…ë ¥ : ");
             id = inputInfo.next();
-            System.out.print("Ãß°¡ÇÒ PASSWORD ÀÔ·Â : ");
+            System.out.print("ì¶”ê°€í•  PASSWORD ì…ë ¥ : ");
             password = inputInfo.next();
 
-            // smtmÀÇ ?(¹°À½Ç¥) ¸Å°³º¯¼ö¿¡ ÀÔ·Â¹ŞÀº id,pw ÁöÁ¤
+            // smtmì˜ ?(ë¬¼ìŒí‘œ) ë§¤ê°œë³€ìˆ˜ì— ì…ë ¥ë°›ì€ id,pw ì§€ì •
             stmt.setString(1, id);
             stmt.setString(2, password);
 
-            // º¯°æµÈ stmt¸¦ DB table °»½Å
+            // ë³€ê²½ëœ stmtë¥¼ DB table ê°±ì‹ 
             stmt.executeUpdate();
-            System.out.printf("ID : %s°¡ Ãß°¡µÇ¾ú½À´Ï´Ù.", id);
+            System.out.printf("ID : %sê°€ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.", id);
 
-        } catch (SQLNonTransientConnectionException ce) { // DB¿Í ¿¬°áÀÌ µÇÁö ¾ÊÀº °æ¿ì ·Î±× Ãâ·Â ÈÄ ½Ã½ºÅÛ Á¾·á
+        } catch (SQLNonTransientConnectionException ce) { // DBì™€ ì—°ê²°ì´ ë˜ì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ ì¶œë ¥ í›„ ì‹œìŠ¤í…œ ì¢…ë£Œ
             logger.error("\n System exit", ce);
             System.exit(0);
-        } catch (SQLException e) { // Áßº¹µÈ ID °ªÀ» ÀÔ·ÂÇÑ °æ¿ì ´Ù½Ã insert() ¸Ş¼Òµå È£ÃâÇÏ¿© ÀçÀÔ·Â
-            logger.info("\n ¾ÆÀÌµğ°¡ Áßº¹µÇ¾ú½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä", e);
+        } catch (SQLException e) { // ì¤‘ë³µëœ ID ê°’ì„ ì…ë ¥í•œ ê²½ìš° ë‹¤ì‹œ insert() ë©”ì†Œë“œ í˜¸ì¶œí•˜ì—¬ ì¬ì…ë ¥
+            logger.info("\n ì•„ì´ë””ê°€ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”", e);
             insert();
         } finally {
-            inputInfo.nextLine(); // ´ÙÀ½ ÀÛ¾÷À» ¼öÇàÇÏ±â À§ÇØ inputInfo¸¦ ÃÊ±âÈ­
+            inputInfo.nextLine(); // ë‹¤ìŒ ì‘ì—…ì„ ìˆ˜í–‰í•˜ê¸° ìœ„í•´ inputInfoë¥¼ ì´ˆê¸°í™”
         }
     }
 
     /**
-     *        TABLE¿¡ ÀúÀåµÈ ID°ª°ú ÀÏÄ¡ÇÏ´Â ID, PASSWORD »èÁ¦
+     * TABLEì— ì €ì¥ëœ IDê°’ê³¼ ì¼ì¹˜í•˜ëŠ” ID, PASSWORD ì‚­ì œ
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
-     *
      */
     public void delete() {
 
-        // Driver ·Îµå
+        // Driver ë¡œë“œ
         loadDriver();
-
-        System.out.print("»èÁ¦ÇÒ ID ÀÔ·Â : ");
+        System.out.print("ì‚­ì œí•  ID ì…ë ¥ : ");
         id = inputInfo.next();
 
-        // DB ¿¬°á Á¤º¸, SQL¹®À» Àü¼ÛÇÒ °´Ã¼, ÀÔ·Â¹ŞÀº ·¹ÄÚµå°¡ TABLE¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ±â À§ÇØ Á¤º¸¸¦ ¿äÃ»
-        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("DELETE FROM info WHERE id = ?"); 
-                ResultSet rs = stmt.executeQuery("SELECT * FROM info WHERE id ='" + id + "'");) {
+        // DB ì—°ê²° ì •ë³´, SQLë¬¸ì„ ì „ì†¡í•  ê°ì²´, ì…ë ¥ë°›ì€ ë ˆì½”ë“œê°€ TABLEì— ìˆëŠ”ì§€ í™•ì¸í•˜ê¸° ìœ„í•´ ì •ë³´ë¥¼ ìš”ì²­
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("DELETE FROM info WHERE id = ?"); ResultSet rs = stmt.executeQuery("SELECT * FROM info WHERE id ='" + id + "'");) {
 
-            // »ç¿ëÀÚ¿¡°Ô ÀÔ·Â ¹ŞÀº ID¿Í ÀÏÄ¡ÇÏ´Â ID, PW »èÁ¦
+            // ì‚¬ìš©ìì—ê²Œ ì…ë ¥ ë°›ì€ IDì™€ ì¼ì¹˜í•˜ëŠ” ID, PW ì‚­ì œ
             if (rs.next()) {
-                /* ¿¬°áµÈ DBÀÇ Å×ÀÌºí¿¡ ·¹ÄÚµå°¡ ÀÖ´Â °æ¿ì ½ÇÇà */
+                /* ì—°ê²°ëœ DBì˜ í…Œì´ë¸”ì— ë ˆì½”ë“œê°€ ìˆëŠ” ê²½ìš° ì‹¤í–‰ */
 
-                // smtmÀÇ ?(¹°À½Ç¥) ¸Å°³º¯¼ö¿¡ ÀÔ·Â¹ŞÀº id ÁöÁ¤
+                // smtmì˜ ?(ë¬¼ìŒí‘œ) ë§¤ê°œë³€ìˆ˜ì— ì…ë ¥ë°›ì€ id ì§€ì •
                 stmt.setString(1, id);
 
-                // º¯°æµÈ Á¤º¸¸¦ Table ¾÷µ¥ÀÌÆ®
+                // ë³€ê²½ëœ ì •ë³´ë¥¼ Table ì—…ë°ì´íŠ¸
                 stmt.executeUpdate();
-                System.out.println("»èÁ¦ ¿Ï·á");
+                System.out.println("ì‚­ì œ ì™„ë£Œ");
             } else {
-                System.out.println("»èÁ¦ÇÒ ID°¡ ¾ø½À´Ï´Ù. ¼±ÅÃ È­¸éÀ¸·Î µ¹¾Æ°©´Ï´Ù."); /* ¿¬°áµÈ DBÀÇ Å×ÀÌºí¿¡ ·¹ÄÚµå°¡ ¾ø´Â °æ¿ì */
-
+                System.out.println("ì‚­ì œí•  IDê°€ ì—†ìŠµë‹ˆë‹¤. ì„ íƒ í™”ë©´ìœ¼ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤."); /* ì—°ê²°ëœ DBì˜ í…Œì´ë¸”ì— ë ˆì½”ë“œê°€ ì—†ëŠ” ê²½ìš° */
             }
-
-        } catch (SQLNonTransientConnectionException ce) { // DB¿Í ¿¬°áÀÌ µÇÁö ¾ÊÀº °æ¿ì ·Î±× Ãâ·Â ÈÄ ½Ã½ºÅÛ Á¾·á
-            logger.error("\n ½Ã½ºÅÛ Á¾·á", ce);
+        } catch (SQLNonTransientConnectionException ce) { // DBì™€ ì—°ê²°ì´ ë˜ì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ ì¶œë ¥ í›„ ì‹œìŠ¤í…œ ì¢…ë£Œ
+            logger.error("\n ì‹œìŠ¤í…œ ì¢…ë£Œ", ce);
             System.exit(0);
-
-        } catch (Exception e) { // ÀÌ½´·Î ¿¹¿Ü ¹ß»ı ½Ã ·Î±× Ãâ·Â ÈÄ ½Ã½ºÅÛ Á¾·á
-            logger.error("\n ½Ã½ºÅÛ Á¾·á", e);
+        } catch (Exception e) { // ì´ìŠˆë¡œ ì˜ˆì™¸ ë°œìƒ ì‹œ ë¡œê·¸ ì¶œë ¥ í›„ ì‹œìŠ¤í…œ ì¢…ë£Œ
+            logger.error("\n ì‹œìŠ¤í…œ ì¢…ë£Œ", e);
             System.exit(0);
         } finally {
-            inputInfo.nextLine(); // ´ÙÀ½ ÀÛ¾÷À» ¼öÇàÇÏ±â À§ÇØ inputInfo¸¦ ÃÊ±âÈ­
+            inputInfo.nextLine(); // ë‹¤ìŒ ì‘ì—…ì„ ìˆ˜í–‰í•˜ê¸° ìœ„í•´ inputInfoë¥¼ ì´ˆê¸°í™”
         }
     }
 
     /**
-     *        TABLE¿¡ ÀúÀåµÈ IDÀÇ PW¸¦ º¯°æ
+     * TABLEì— ì €ì¥ëœ IDì˜ PWë¥¼ ë³€ê²½
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
-     *
+     * 
      */
     public void update() {
-
-        // Driver ·Îµå
+        // Driver ë¡œë“œ
         loadDriver();
 
-        // DB ¿¬°á Á¤º¸, ½ÇÇàÇÒ ¸í·É¾î
-        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("UPDATE info SET password = ? WHERE id = ?");) {
+        // DB ì—°ê²° ì •ë³´, ì‹¤í–‰í•  ëª…ë ¹ì–´
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); PreparedStatement stmt = con.prepareStatement("UPDATE info SET password = ? WHERE id = ?");) {
 
-            // »ç¿ëÀÚ¿¡°Ô ¾÷µ¥ÀÌÆ® ÇÒ ID¸¦ ÀÔ·Â¹Ş¾Æ PW¸¦ º¯°æ
-            System.out.print("¾÷µ¥ÀÌÆ®ÇÒ ID ÀÔ·Â : ");
+            // ì‚¬ìš©ìì—ê²Œ ì—…ë°ì´íŠ¸ í•  IDë¥¼ ì…ë ¥ë°›ì•„ PWë¥¼ ë³€ê²½
+            System.out.print("ì—…ë°ì´íŠ¸í•  ID ì…ë ¥ : ");
             id = inputInfo.next();
-            System.out.print("IDÀÇ »õ·Î¿î PASSWORD ÀÔ·Â : ");
+            System.out.print("IDì˜ ìƒˆë¡œìš´ PASSWORD ì…ë ¥ : ");
             password = inputInfo.next();
 
-            // smtmÀÇ ?(¹°À½Ç¥) ¸Å°³º¯¼ö¿¡ ÀÔ·Â¹ŞÀº id,pw ÁöÁ¤
+            // smtmì˜ ?(ë¬¼ìŒí‘œ) ë§¤ê°œë³€ìˆ˜ì— ì…ë ¥ë°›ì€ id,pw ì§€ì •
             stmt.setString(1, password);
             stmt.setString(2, id);
 
-            /* ¾÷µ¥ÀÌÆ®µÈ ·¹ÄÚµåÀÇ ¼ö°¡ 0ÀÌ¸é ÀÏÄ¡ÇÏ´Â ID°¡ ¾ø¾î ¾÷µ¥ÀÌÆ®µÇÁö ¾ÊÀº °Í, ÇÑ °³ÀÌ»ó Update µÆÀ¸¸é ½ÇÇà */
+            /* ì—…ë°ì´íŠ¸ëœ ë ˆì½”ë“œì˜ ìˆ˜ê°€ 0ì´ë©´ ì¼ì¹˜í•˜ëŠ” IDê°€ ì—†ì–´ ì—…ë°ì´íŠ¸ë˜ì§€ ì•Šì€ ê²ƒ, í•œ ê°œì´ìƒ Update ëìœ¼ë©´ ì‹¤í–‰ */
             if (stmt.executeUpdate() != 0) {
-                System.out.println("¾÷µ¥ÀÌÆ® ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+                System.out.println("ì—…ë°ì´íŠ¸ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
             } else {
-                System.out.println("ÀÏÄ¡ÇÏ´Â ID°¡ ¾ø½À´Ï´Ù. ¼±ÅÃ È­¸éÀ¸·Î µ¹¾Æ°©´Ï´Ù.");
+                System.out.println("ì¼ì¹˜í•˜ëŠ” IDê°€ ì—†ìŠµë‹ˆë‹¤. ì„ íƒ í™”ë©´ìœ¼ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤.");
             }
-
-        } catch (SQLNonTransientConnectionException ce) { // DB¿Í ¿¬°áÀÌ µÇÁö ¾ÊÀº °æ¿ì ·Î±× Ãâ·Â ÈÄ ½Ã½ºÅÛ Á¾·á
-            logger.error("\n ½Ã½ºÅÛ Á¾·á", ce);
+        } catch (SQLNonTransientConnectionException ce) { // DBì™€ ì—°ê²°ì´ ë˜ì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ ì¶œë ¥ í›„ ì‹œìŠ¤í…œ ì¢…ë£Œ
+            logger.error("\n ì‹œìŠ¤í…œ ì¢…ë£Œ", ce);
             System.exit(0);
 
-        } catch (Exception e) { // ÀÌ½´·Î ¿¹¿Ü ¹ß»ı ½Ã ·Î±× Ãâ·Â ÈÄ ½Ã½ºÅÛ Á¾·á
-            logger.error("\n ½Ã½ºÅÛ Á¾·á", e);
+        } catch (Exception e) { // ì´ìŠˆë¡œ ì˜ˆì™¸ ë°œìƒ ì‹œ ë¡œê·¸ ì¶œë ¥ í›„ ì‹œìŠ¤í…œ ì¢…ë£Œ
+            logger.error("\n ì‹œìŠ¤í…œ ì¢…ë£Œ", e);
             System.exit(0);
         } finally {
-            inputInfo.nextLine(); // ´ÙÀ½ ÀÛ¾÷À» ¼öÇàÇÏ±â À§ÇØ inputInfo¸¦ ÃÊ±âÈ­
+            inputInfo.nextLine(); // ë‹¤ìŒ ì‘ì—…ì„ ìˆ˜í–‰í•˜ê¸° ìœ„í•´ inputInfoë¥¼ ì´ˆê¸°í™”
         }
     }
 
+   /**
+    * TABLEì— ì €ì¥ëœ ë ˆì½”ë“œë¥¼ Consoleì— ì¶œë ¥
+    * 
+    * @author "KyungHun Park"
+    * @since 2021. 9. 3.
+    */
+   public void read() {
+       // Driver ë¡œë“œ
+       loadDriver();
+       
+       // DB ì—°ê²° ì •ë³´, ì‹¤í–‰í•  ëª…ë ¹ì–´, DBì˜ TABLEì— ë‹´ê¸´ ì •ë³´ë¥¼ ìš”ì²­ í›„ rsì— ì €ì¥
+       try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
+               PreparedStatement stmt = con.prepareStatement("SELECT * FROM  info"); 
+               ResultSet rs = stmt.executeQuery();) {
+           
+           System.out.println("");
+           
+           if (rs.next()) {
+               /* tableì— ë ˆì½”ë“œê°€ ì €ì¥ë˜ì–´ìˆìœ¼ë©´ ì‹¤í–‰ */
+               
+               // rsê°€ ìœ„ì—ì„œ í•œë²ˆ next() ë˜ì—ˆê¸° ë•Œë¬¸ì— ì œì¼ ì²˜ìŒìœ¼ë¡œ ëŒë ¤ì¤€ë‹¤.
+               rs.beforeFirst();
+
+               if (rs.next()) {
+                   /* tableì— ë ˆì½”ë“œê°€ ì €ì¥ë˜ì–´ìˆìœ¼ë©´ ì‹¤í–‰ */
+                   
+                   // rsê°€ ìœ„ì—ì„œ í•œë²ˆ next() ë˜ì—ˆê¸° ë•Œë¬¸ì— ì œì¼ ì²˜ìŒìœ¼ë¡œ ëŒë ¤ì¤€ë‹¤.
+                   rs.beforeFirst();
+                   
+                   // TABLEì— ì €ì¥ëœ idì™€ pwë¥¼ ì¶œë ¥
+                   while (rs.next()) {
+                       // DBì˜ ë ˆì½”ë“œë“¤ì„ ë¬¸ìì—´ë¡œ ì¶œë ¥í•œë‹¤.
+                       System.out.println(String.format("ID: %s, PW: %s", rs.getString("id"), rs.getString("password")));
+                   }
+               } else { // rsê°€ ë¹„ì–´ìˆì„ ê²½ìš°
+                   System.out.println("TABLEì´ ë¹„ì–´ìˆìŠµë‹ˆë‹¤.");
+               }
+               // ì¤„ ë°”ê¿ˆ
+               System.out.println("");
+           } catch (SQLNonTransientConnectionException ce) { // DBì™€ ì—°ê²°ì´ ë˜ì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ ì¶œë ¥ í›„ ì‹œìŠ¤í…œ ì¢…ë£Œ
+               logger.error("\n DBì— ì—°ê²°í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì‹œìŠ¤í…œ ì¢…ë£Œ", ce);
+               System.exit(0);
+           } catch (Exception e) { // ì´ìŠˆë¡œ ì˜ˆì™¸ ë°œìƒ ì‹œ ë¡œê·¸ ì¶œë ¥ í›„ ì‹œìŠ¤í…œ ì¢…ë£Œ
+               logger.error("\n ì‹œìŠ¤í…œ ì¢…ë£Œ", e);
+               System.exit(0);
+           }
+       }
+
     /**
-     *        TABLE¿¡ ÀúÀåµÈ ·¹ÄÚµå¸¦ Console¿¡ Ãâ·Â
+     * ë“œë¼ì´ë²„ ë¡œë“œ ë©”ì†Œë“œ
      * 
      * @author "KyungHun Park"
      * @since 2021. 9. 3.
-     * 
-     */
-    public void read() {
-
-        // Driver ·Îµå
-        loadDriver();
-        // DB ¿¬°á Á¤º¸, ½ÇÇàÇÒ ¸í·É¾î, DBÀÇ TABLE¿¡ ´ã±ä Á¤º¸¸¦ ¿äÃ» ÈÄ rs¿¡ ÀúÀå
-        try (Connection con = DriverManager.getConnection(DB_URL, DB_ID, DB_PW); 
-                PreparedStatement stmt = con.prepareStatement("SELECT * FROM  info"); 
-                ResultSet rs = stmt.executeQuery();) {
-
-            System.out.println("");
-
-            if (rs.next()) {
-                /* table¿¡ ·¹ÄÚµå°¡ ÀúÀåµÇ¾îÀÖÀ¸¸é ½ÇÇà */
-
-                // rs°¡ À§¿¡¼­ ÇÑ¹ø next() µÇ¾ú±â ¶§¹®¿¡ Á¦ÀÏ Ã³À½À¸·Î µ¹·ÁÁØ´Ù.
-                rs.beforeFirst();
-
-                // TABLE¿¡ ÀúÀåµÈ id¿Í pw¸¦ Ãâ·Â
-                while (rs.next()) {
-                    // DBÀÇ ·¹ÄÚµåµéÀ» ¹®ÀÚ¿­·Î Ãâ·ÂÇÑ´Ù.
-                    System.out.println(String.format("ID: %s, PW: %s", rs.getString("id"), rs.getString("password")));
-                }
-            } else { // rs°¡ ºñ¾îÀÖÀ» °æ¿ì
-                System.out.println("TABLEÀÌ ºñ¾îÀÖ½À´Ï´Ù.");
-            }
-            // ÁÙ ¹Ù²Ş
-            System.out.println("");
-
-        } catch (SQLNonTransientConnectionException ce) { // DB¿Í ¿¬°áÀÌ µÇÁö ¾ÊÀº °æ¿ì ·Î±× Ãâ·Â ÈÄ ½Ã½ºÅÛ Á¾·á
-            logger.error("\n DB¿¡ ¿¬°áÇÒ ¼ö ¾ø½À´Ï´Ù. ½Ã½ºÅÛ Á¾·á", ce);
-            System.exit(0);
-        } catch (Exception e) { // ÀÌ½´·Î ¿¹¿Ü ¹ß»ı ½Ã ·Î±× Ãâ·Â ÈÄ ½Ã½ºÅÛ Á¾·á
-            logger.error("\n ½Ã½ºÅÛ Á¾·á", e);
-            System.exit(0);
-        }
-    }
-
-    /**
-     *        µå¶óÀÌ¹ö ·Îµå ¸Ş¼Òµå
-     * 
-     * @author "KyungHun Park"
-     * @since 2021. 9. 3.
-     *
      */
     static void loadDriver() {
         try {
-            Class.forName(DB_DRIVER); // µ¥ÀÌÅÍº£ÀÌ½º µå¶óÀÌ¹ö ·Îµå
-        } catch (Exception e) { // µå¶óÀÌ¹ö°¡ ·Îµå µÇÁö ¾ÊÀ» °æ¿ì ·Î±×¸¦ Ãâ·ÂÇÑ µÚ ½Ã½ºÅÛ Á¾·á
-            logger.error(" %s,µå¶óÀÌ¹ö¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ½Ã½ºÅÛ Á¾·á", e);
+            Class.forName(DB_DRIVER); // ë°ì´í„°ë² ì´ìŠ¤ ë“œë¼ì´ë²„ ë¡œë“œ
+        } catch (Exception e) { // ë“œë¼ì´ë²„ê°€ ë¡œë“œ ë˜ì§€ ì•Šì„ ê²½ìš° ë¡œê·¸ë¥¼ ì¶œë ¥í•œ ë’¤ ì‹œìŠ¤í…œ ì¢…ë£Œ
+            logger.error(" %s,ë“œë¼ì´ë²„ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì‹œìŠ¤í…œ ì¢…ë£Œ", e);
             System.exit(0);
         }
     }
-
 }

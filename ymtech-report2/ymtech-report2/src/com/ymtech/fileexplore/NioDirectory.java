@@ -1,4 +1,5 @@
 package com.ymtech.fileexplore;
+
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -10,37 +11,36 @@ import java.nio.file.attribute.BasicFileAttributes;
  * @author "KyungHun Park"
  * @since 2021. 8. 26.
  *
- *        NIO¸¦ »ç¿ëÇÑ Class, fileVisitor¸¦ »ó¼Ó¹Ş¾Æ
+ *        NIOë¥¼ ì‚¬ìš©í•œ Class, fileVisitorë¥¼ ìƒì†ë°›ì•„
  */
 class NioDirectory implements FileVisitor<Path> {
-
-    @Override // µğ·ºÅä¸®¿¡ Á¢±ÙÇÏ¿´À» ¶§
+    @Override // ë””ë ‰í† ë¦¬ì— ì ‘ê·¼í•˜ì˜€ì„ ë•Œ
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-
-        // Á¢±ÙÇÑ µğ·ºÅä¸® ÀÌ¸§ Ãâ·Â
-        System.out.printf("µğ·ºÅä¸® : [%s]\n", dir.toString());
-
-        // °è¼Ó Å½»ö ÁøÇà
-        return FileVisitResult.CONTINUE;
-    }
-
-    @Override // ÆÄÀÏ¿¡ Á¢±ÙÇÏ¿´À» ¶§ ½ÇÇà
-    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-
-        // Á¢±ÙÇÑ ÆÄÀÏ ÀÌ¸§ Ãâ·Â
-        System.out.printf("\tÆÄÀÏ %s \n", file.toString());
         
-        // °è¼Ó Å½»ö ÁøÇà
+        // ì ‘ê·¼í•œ ë””ë ‰í† ë¦¬ ì´ë¦„ ì¶œë ¥
+        System.out.printf("ë””ë ‰í† ë¦¬ : [%s]\n", dir.toString());
+        
+        // ê³„ì† íƒìƒ‰ ì§„í–‰
         return FileVisitResult.CONTINUE;
     }
 
-    @Override // ÆÄÀÏ¿¡ Á¢±ÙÇÏÁö ¸øÇßÀ» ¶§ ½ÇÇà
-    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-        return FileVisitResult.TERMINATE; // ¿À·ù ¹ß»ı½Ã Å½»ö Á¾·á
+    @Override // íŒŒì¼ì— ì ‘ê·¼í•˜ì˜€ì„ ë•Œ ì‹¤í–‰
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        
+        // ì ‘ê·¼í•œ íŒŒì¼ ì´ë¦„ ì¶œë ¥
+        System.out.printf("\tíŒŒì¼ %s \n", file.toString());
+
+        // ê³„ì† íƒìƒ‰ ì§„í–‰
+        return FileVisitResult.CONTINUE;
     }
 
-    @Override // µğ·ºÅä¸®¿¡¼­ ¶°³¯ ¶§ ½ÇÇà
+    @Override // íŒŒì¼ì— ì ‘ê·¼í•˜ì§€ ëª»í–ˆì„ ë•Œ ì‹¤í–‰
+    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+        return FileVisitResult.TERMINATE; // ì˜¤ë¥˜ ë°œìƒì‹œ íƒìƒ‰ ì¢…ë£Œ
+    }
+
+    @Override // ë””ë ‰í† ë¦¬ì—ì„œ ë– ë‚  ë•Œ ì‹¤í–‰
     public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-        return FileVisitResult.CONTINUE; // °è¼Ó Å½»ö ÁøÇà
+        return FileVisitResult.CONTINUE; // ê³„ì† íƒìƒ‰ ì§„í–‰
     }
 }
