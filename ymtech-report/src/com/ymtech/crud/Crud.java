@@ -44,6 +44,7 @@ public class Crud {
                 logger.error("\n 시스템 종료", e);
                 System.exit(0);
             }
+            
             /* 사용자의 입력에 따른 메소드 호출 */
             switch (control) {
             case 1: // 추가

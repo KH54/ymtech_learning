@@ -29,7 +29,7 @@ public class Fileoutput {
         NioDirectory nio = new NioDirectory();
 
         // 탐색할 디렉토리 경로 설정
-        final String filePath = "C:\\Users\\user\\Desktop\\일학습병행제\\NCS\\새 폴더"; //
+        final String filePath = "C:\\Users\\user\\Desktop\\일학습병행제"; //
         try {
             // 해당 경로를 가진 file , path 객체 생성
             File file = new File(filePath);
